@@ -1,5 +1,5 @@
 
-import { daysLeft } from "./daysLeft"
+import { daysLeft } from "./utils/daysLeft"
 
 interface ProductProps{
     name: string, 

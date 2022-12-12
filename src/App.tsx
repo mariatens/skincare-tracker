@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import logo from './logo.svg';
+import { useLocalStorage } from './utils/localStorage';
 import './App.css';
 import { InputBar } from './InputBar';
 import { Product } from './Product';
@@ -14,7 +14,7 @@ function App() {
   const [input, setInput] = useState<string>("")
   const [opened, setOpened] = useState<boolean>(false)
   const [closed, setClosed] = useState<boolean>(false)
-  const [products, setProducts] = useState<Product[]>([])
+  const [products, setProducts] = useLocalStorage("products", [])
   const [month, setMonth] = useState<string>()
   const handleEnter = () => {
     const product = ({
@@ -43,7 +43,7 @@ function App() {
     closed = {closed}
     handleEnter = {handleEnter}/>
 
-    {products.map(product => 
+    {products.map((product: Product) => 
       month ? (
       <Product name = {product.name} date = {product.date} month = {month} />):
       <Product name = {product.name} date = {product.date} />
