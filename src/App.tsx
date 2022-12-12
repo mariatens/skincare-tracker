@@ -42,15 +42,13 @@ function App() {
     opened = {opened}
     closed = {closed}
     handleEnter = {handleEnter}/>
-
-    {products.map((product: Product) => 
+    <div className = "container">
+    {products.map((product: Product, i: number) => 
       month ? (
-      <Product name = {product.name} date = {product.date} month = {month} />):
-      <Product name = {product.name} date = {product.date} />
-      
-      )
-      
-      }
+      <Product key = {i} name = {product.name} date = {product.date} month = {month} />):
+      <Product  key = {i} name = {product.name} date = {product.date} /> 
+      ) }
+      </div>
     </>
   );
 }
