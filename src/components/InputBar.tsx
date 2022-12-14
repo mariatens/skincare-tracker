@@ -39,10 +39,10 @@ export function InputBar(props: InputBarProps): JSX.Element{
           </label>
       </>
     )}
-    {(props.closed && props.expiryDate) &&
+    {props.closed &&
         (<label>
             Expiry Date:
-            <input type="date" value = {props.expiryDate.toISOString().substring(0, 10)} onSelect = {props.handleExpiryDate}/>
+            <input type="date" value = {props.expiryDate?.toISOString().substring(0, 10)} onSelect = {props.handleExpiryDate}/>
           </label>
         )
         }
