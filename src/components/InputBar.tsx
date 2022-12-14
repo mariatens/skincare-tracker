@@ -1,4 +1,4 @@
-interface InputBarProps{
+interface InputBarProps{ //TODO: maybe change to product: IProduct and input as name
     input: string,
     onChange: (product: any) => void, 
     handleOpened: (event: any) => void,
@@ -12,7 +12,6 @@ interface InputBarProps{
     handleExpiryDate?: (event: any)=>void, 
     openedDate: Date, 
     expiryDate?: Date
-
 }
 
 export function InputBar(props: InputBarProps): JSX.Element{
@@ -36,14 +35,14 @@ export function InputBar(props: InputBarProps): JSX.Element{
       </select>
       <label>
             Date Opened:
-            <input type="date" value= {props.openedDate.toISOString()} onSelect = {props.handleOpenedDate}/>
+            <input type="date" value= {props.openedDate.toISOString().substring(0, 10)} onSelect = {props.handleOpenedDate}/>
           </label>
       </>
     )}
     {(props.closed && props.expiryDate) &&
         (<label>
             Expiry Date:
-            <input type="date" value = {props.expiryDate.toISOString()} onSelect = {props.handleExpiryDate}/>
+            <input type="date" value = {props.expiryDate.toISOString().substring(0, 10)} onSelect = {props.handleExpiryDate}/>
           </label>
         )
         }

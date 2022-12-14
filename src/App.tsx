@@ -50,7 +50,7 @@ function App() {
     closed = {closed}
     handleEnter = {handleEnter}
     handleExpiryDate = {(e)=> setExpiryDate(e.target.value)}
-    handleOpenedDate={(e)=> setOpenedDate(e.target.value)}
+    handleOpenedDate= {(e)=> setOpenedDate(e.target.value)}
     openedDate={openedDate}
     expiryDate={expiryDate}
     />
