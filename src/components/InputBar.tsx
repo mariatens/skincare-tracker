@@ -7,7 +7,11 @@ interface InputBarProps{
     closed: boolean, 
     handleEnter: ()=>void, 
     handleMonths: (e: any)=> void, 
-    months: string|undefined
+    months: string|undefined, 
+    handleOpenedDate: (event: any)=>void, 
+    handleExpiryDate?: (event: any)=>void, 
+    openedDate: Date, 
+    expiryDate?: Date
 
 }
 
@@ -32,14 +36,14 @@ export function InputBar(props: InputBarProps): JSX.Element{
       </select>
       <label>
             Date Opened:
-            <input type="date" />
+            <input type="date" value= {props.openedDate.toISOString()} onSelect = {props.handleOpenedDate}/>
           </label>
       </>
     )}
-    {props.closed &&
+    {(props.closed && props.expiryDate) &&
         (<label>
             Expiry Date:
-            <input type="date" />
+            <input type="date" value = {props.expiryDate.toISOString()} onSelect = {props.handleExpiryDate}/>
           </label>
         )
         }
