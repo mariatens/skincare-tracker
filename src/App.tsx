@@ -5,10 +5,10 @@ import { InputBar } from './components/InputBar';
 import { Product } from './components/Product';
 
 export interface IProduct{
-  openedDate: Date,
+  openedDate: string,
   name: string,
   months?: string|undefined, 
-  expiryDate?: Date|undefined
+  expiryDate?: string|undefined
 }
 
 function App() {
@@ -29,7 +29,6 @@ function App() {
     setProducts([...products, product])
     // setInput("") //TODO: all of it should be blanked
   }
-
   
   return (
     <>
