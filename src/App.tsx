@@ -17,8 +17,8 @@ function App() {
   const [closed, setClosed] = useState<boolean>(false)
   const [products, setProducts] = useLocalStorage("products", [])
   const [months, setMonths] = useState<string>()
-  const [expiryDate, setExpiryDate] = useState<Date>()
-  const [openedDate, setOpenedDate]= useState<Date>(new Date())
+  const [expiryDate, setExpiryDate] = useState<string>()
+  const [openedDate, setOpenedDate]= useState<string>(new Date().toISOString().substring(0, 10))
   const handleEnter = () => {
     const product = ({
       name: input, 
@@ -27,7 +27,7 @@ function App() {
       expiryDate: expiryDate
     })
     setProducts([...products, product])
-    // setInput("")
+    // setInput("") //TODO: all of it should be blanked
   }
 
   
