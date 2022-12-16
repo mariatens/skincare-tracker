@@ -20,14 +20,19 @@ function App() {
   const [expiryDate, setExpiryDate] = useState<string>()
   const [openedDate, setOpenedDate]= useState<string>(new Date().toISOString().substring(0, 10))
   const handleEnter = () => {
-    const product = ({
+    const product: IProduct = ({
       name: input, 
-      date: openedDate, 
+      openedDate: openedDate, 
       months: months, 
       expiryDate: expiryDate
     })
     setProducts([...products, product])
-    // setInput("") //TODO: all of it should be blanked
+    // setInput("") //TODO: all of options should be blanked
+    // setOpened(false)
+    // setClosed(false)
+    // setOpened(new Date().toISOString().substring(0, 10))
+    // setMonths()
+    // setExpiryDate()
   }
   
   return (
