@@ -27,18 +27,18 @@ function App() {
       expiryDate: expiryDate
     })
     setProducts([...products, product])
-    // setInput("") //TODO: all of options should be blanked
-    // setOpened(false)
-    // setClosed(false)
-    // setOpened(new Date().toISOString().substring(0, 10))
-    // setMonths()
-    // setExpiryDate()
+    setInput("") 
+    setOpened(false)
+    setClosed(false)
+    setOpenedDate(new Date().toISOString().substring(0, 10))
+    setMonths("24")
+    setExpiryDate("")
   }
   
   return (
     <>
     <h1>Skincare Expiry Manager App</h1>
-    <h3>Write the input and its expiry date or when you opened it</h3>
+    <h3>Write the product and its expiry date or when you opened it</h3>
     <InputBar 
     handleMonths={(e)=> setMonths(e.target.value)}
     months = {months}
@@ -61,10 +61,14 @@ function App() {
     <div className = "container">
     {products.map((product: IProduct, i: number) => 
       months ? (
-      <Product key = {i} product = {product} />):
+        <div className = "cell">
+      <Product key = {i} product = {product} />
+      </div>):
+      <div className = "cell">
       <Product  key = {i} product = {product}/> 
-      ) }
       </div>
+      ) }
+    </div>
     </>
   );
 }
