@@ -11,7 +11,8 @@ interface InputBarProps{ //TODO: maybe change to product: IProduct and input as 
     handleOpenedDate: (event: any)=>void, 
     handleExpiryDate?: (event: any)=>void, 
     openedDate: string, 
-    expiryDate?: string
+    expiryDate?: string, 
+    handleEnterKey: (event: any)=>void,
 }
 
 export function InputBar(props: InputBarProps): JSX.Element{
@@ -46,7 +47,7 @@ export function InputBar(props: InputBarProps): JSX.Element{
           </label>
         )
         }
-    <button onClick = {props.handleEnter}>Enter</button>
+    <button onClick = {props.handleEnter} onKeyDown = {props.handleEnterKey}>Enter</button>
         </>
     )
 }
