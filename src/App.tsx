@@ -23,12 +23,6 @@ function App() {
   const [openedProducts, setOpenedProducts] = useState<IProduct[]>([]);
   const [unopenedProducts, setUnopenedProducts] = useState<IProduct[]>([]);
 
-  const handleEnterKey = (e: any) => {
-    if (e.key === "Enter") {
-      handleEnter();
-    }
-  };
-
   const handleEnter = () => {
     const product: IProduct = {
       name: input,
@@ -78,7 +72,6 @@ function App() {
         opened={opened}
         closed={closed}
         handleEnter={handleEnter}
-        handleEnterKey={handleEnterKey}
         handleExpiryDate={(e) => setExpiryDate(e.target.value)}
         handleOpenedDate={(e) => setOpenedDate(e.target.value)}
         openedDate={openedDate}
