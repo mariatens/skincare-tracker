@@ -15,10 +15,13 @@ function App() {
   const [input, setInput] = useState<string>("")
   const [opened, setOpened] = useState<boolean>(false)
   const [closed, setClosed] = useState<boolean>(false)
-  const [products, setProducts] = useLocalStorage("products", [])
   const [months, setMonths] = useState<string>()
   const [expiryDate, setExpiryDate] = useState<string>()
   const [openedDate, setOpenedDate]= useState<string>(new Date().toISOString().substring(0, 10))
+  const [openedProducts,setOpenedProducts] = useState<IProduct[]>([])  
+  const [unopenedProducts, setUnopenedProducts] = useState<IProduct[]>([])
+  
+  
   const handleEnter = () => {
     const product: IProduct = ({
       name: input, 
@@ -26,12 +29,18 @@ function App() {
       months: months, 
       expiryDate: expiryDate
     })
-    setProducts([...products, product])
+    if (months){
+      setOpenedProducts([...openedProducts, product])
+    }
+    if(expiryDate){
+      setUnopenedProducts([...unopenedProducts, product])
+    }
+    
     setInput("") 
     setOpened(false)
     setClosed(false)
     setOpenedDate(new Date().toISOString().substring(0, 10))
-    setMonths("24")
+    setMonths(undefined) 
     setExpiryDate("")
   }
   
@@ -58,12 +67,17 @@ function App() {
     openedDate={openedDate}
     expiryDate={expiryDate}
     />
+    <h1>Opened products</h1>
     <div className = "container">
-    {products.map((product: IProduct, i: number) => 
-      months ? (
-        <div className = "cell">
+    {openedProducts.map((product: IProduct, i: number) => 
+      <div className = "cell">
       <Product key = {i} product = {product} />
-      </div>):
+      </div>
+      ) }
+    </div>
+    <h1>Unopened products</h1>
+    <div className = "container">
+    {unopenedProducts.map((product: IProduct, i: number) => 
       <div className = "cell">
       <Product  key = {i} product = {product}/> 
       </div>
