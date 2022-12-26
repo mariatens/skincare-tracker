@@ -1,5 +1,5 @@
 interface InputBarProps {
-  //TODO: maybe change to product: IProduct and input as name. think this isn't sensible
+  //maybe change to product: IProduct and input as name. think this isn't sensible
   onChange: (product: any) => void;
   handleOpened: (event: any) => void;
   handleClosed: (event: any) => void;
@@ -67,7 +67,7 @@ export function InputBar(props: InputBarProps): JSX.Element {
           />
         </label>
       )}
-      <button onClick={props.handleEnter}>
+      <button disabled = {props.input === ""} onClick={props.handleEnter}>
         Enter
       </button>
     </>
