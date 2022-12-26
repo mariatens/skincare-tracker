@@ -3,6 +3,7 @@ import { useLocalStorage } from "./utils/localStorage";
 import "./App.css";
 import { InputBar } from "./components/InputBar";
 import { Product } from "./components/Product";
+import { timeLeftOpened } from "./utils/timeLeftOpened";
 
 export interface IProduct {
   openedDate: string;
@@ -46,16 +47,19 @@ function App() {
   const [isOpen, setIsOpen] = useState(false);
 
 
-  const handleChangeToOpen = ()=>{
-    const product= {
+  const handleChangeToOpen = (product: IProduct)=>{
+    setIsOpen(!isOpen);     //to ask how many months it can remain opened
+  }
+  const submit = (product: IProduct) =>{
+    product = {
       months: months,
       openedDate: openedDate,
-      name: input //TODO: here say the name of the product we have selected
+      name: product.name
     };
     setOpenedDate(new Date().toISOString().substring(0, 10))
-    setIsOpen(!isOpen);     //to ask how many months it can remain opened
     setOpenedProducts([...openedProducts, product]); //?how does it know what is product
-    // unopenedProducts.filter(product => product.name !== product.name); //! problem w this is multiple products with same name
+    const filteredUnopened = unopenedProducts.filter(product => product !== product); //! problem w this is multiple products with same name
+    setUnopenedProducts(filteredUnopened)
   }
 
   return (
@@ -103,7 +107,7 @@ function App() {
       <div className="container">
         {unopenedProducts.map((product: IProduct, i: number) => (
           <div className="cell">
-            <Product key={i} product={product} handleChangeToOpen= {handleChangeToOpen} isOpen = {isOpen} handleMonths={(e) => setMonths(e.target.value)} months = {months}/>
+            <Product key={i} product={product} handleSubmit = {()=>submit(product)} handleChangeToOpen= {()=>handleChangeToOpen(product)} isOpen = {isOpen} handleMonths={(e) => setMonths(e.target.value)} months = {months}/>
           </div>
         ))}
       </div>

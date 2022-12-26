@@ -8,6 +8,7 @@ interface ProductProps {
   isOpen?: boolean;
   months?: string;
   handleMonths?: (e: any) => void;
+  handleSubmit?: (e: any) => void;
 }
 
 export function Product(props: ProductProps): JSX.Element {
@@ -25,6 +26,7 @@ export function Product(props: ProductProps): JSX.Element {
       </>
       )}
        {props.isOpen && (
+        <>
       <div>
         <label>Duration</label>
           <select onChange={props.handleMonths}>
@@ -34,6 +36,8 @@ export function Product(props: ProductProps): JSX.Element {
             <option value="3">3M</option>
           </select>
       </div>
+      <button onClick= {props.handleSubmit}>Submit </button>
+      </>
     )}
     </>
   );
