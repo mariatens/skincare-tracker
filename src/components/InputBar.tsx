@@ -41,6 +41,7 @@ export function InputBar(props: InputBarProps): JSX.Element {
         <>
           <label>Duration</label>
           <select value={props.months} onChange={props.handleMonths}>
+            <option value="Months">Months</option> 
             <option value="24">24M</option>
             <option value="12">12M</option>
             <option value="6">6M</option>

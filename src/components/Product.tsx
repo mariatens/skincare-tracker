@@ -30,6 +30,7 @@ export function Product(props: ProductProps): JSX.Element {
       <div>
         <label>Duration</label>
           <select onChange={props.handleMonths}>
+            <option value="Months">Months</option> 
             <option value="24">24M</option>
             <option value="12">12M</option>
             <option value="6">6M</option>
