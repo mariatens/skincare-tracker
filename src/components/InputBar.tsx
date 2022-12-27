@@ -1,3 +1,5 @@
+import '../App.css'
+
 interface InputBarProps {
   //maybe change to product: IProduct and input as name. think this isn't sensible
   onChange: (product: any) => void;
@@ -18,11 +20,12 @@ interface InputBarProps {
 export function InputBar(props: InputBarProps): JSX.Element {
   return (
     <>
-      <input
+      <input className="write-product"
         placeholder="Write your product here"
         value={props.input}
         onChange={props.onChange}
       ></input>
+      <br></br>
       <label>Opened</label>
       <input
         type="checkbox"
@@ -37,9 +40,10 @@ export function InputBar(props: InputBarProps): JSX.Element {
         checked={props.closed}
         onChange={props.handleClosed}
       ></input>
+      <br></br>
       {props.opened && (
         <>
-          <label>Duration</label>
+          <label>Duration: </label>
           <select value={props.months} onChange={props.handleMonths}>
             <option value="Months">Months</option> 
             <option value="24">24M</option>
@@ -47,9 +51,9 @@ export function InputBar(props: InputBarProps): JSX.Element {
             <option value="6">6M</option>
             <option value="3">3M</option>
           </select>
+          <br></br>
           <label>
-            Date Opened:
-            <input
+            Date Opened: <input  className= "opened"
               type="date"
               value={props.openedDate}
               onChange={props.handleOpenedDate}
@@ -59,15 +63,14 @@ export function InputBar(props: InputBarProps): JSX.Element {
       )}
       {props.closed && (
         <label>
-          Expiry Date:
-          <input
+          Expiry Date: <input
             type="date"
             value={props.expiryDate}
             onChange={props.handleExpiryDate}
           />
         </label>
       )}
-      <button disabled = {props.input === ""} onClick={props.handleEnter}>
+      <button className= "enter-button" disabled = {props.input === ""} onClick={props.handleEnter}>
         Enter
       </button>
     </>

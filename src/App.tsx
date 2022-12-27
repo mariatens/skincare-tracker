@@ -65,7 +65,6 @@ function App() {
   return (
     <>
       <h1>Skincare Expiry Manager App</h1>
-      <h3>Write the product and its expiry date or when you opened it</h3>
       <InputBar
         handleMonths={(e) => setMonths(e.target.value)}
         months={months}
