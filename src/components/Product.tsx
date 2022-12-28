@@ -9,7 +9,6 @@ interface ProductProps {
   months?: string;
   handleMonths?: (e: any) => void;
   handleSubmit?: (e: any) => void;
-  handleEdit?: (e: any) => void;
   handleDelete: (product: IProduct) => void;
 }
 
@@ -29,7 +28,6 @@ export function Product(props: ProductProps): JSX.Element {
         <button className = "change-open" onClick = {props.handleChangeToOpen}>I opened the product!</button>
       </>
       )}
-      <button onClick = {props.handleEdit}>Edit</button>
       <button onClick = {()=> props.handleDelete(props.product)}>Delete</button>
        {props.isOpen && (
         <>

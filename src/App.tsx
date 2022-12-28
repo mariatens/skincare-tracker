@@ -17,8 +17,8 @@ function App() {
   const [input, setInput] = useState<string>("");
   const [opened, setOpened] = useState<boolean>(false);
   const [closed, setClosed] = useState<boolean>(false);
-  const [months, setMonths] = useState<string>();
-  const [expiryDate, setExpiryDate] = useState<string>();
+  const [months, setMonths] = useState<string>("");
+  const [expiryDate, setExpiryDate] = useState<string>("");
   const [openedDate, setOpenedDate] = useState<string>(
     new Date().toISOString().substring(0, 10)
   );
@@ -43,7 +43,7 @@ function App() {
     setOpened(false);
     setClosed(false);
     setOpenedDate(new Date().toISOString().substring(0, 10));
-    setMonths(undefined);
+    setMonths("");
     setExpiryDate("");
   };
 
