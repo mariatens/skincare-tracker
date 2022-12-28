@@ -22,10 +22,10 @@ function App() {
   const [openedDate, setOpenedDate] = useState<string>(
     new Date().toISOString().substring(0, 10)
   );
-  const [openedProducts, setOpenedProducts] = useState<IProduct[]>([]);
-  const [unopenedProducts, setUnopenedProducts] = useState<IProduct[]>([]);
+  const [openedProducts, setOpenedProducts] = useLocalStorage("op-products", [])
+  const [unopenedProducts, setUnopenedProducts] = useLocalStorage("unop-products", [])
   const [isOpen, setIsOpen] = useState(false);
-  const [replaceSoon, setReplaceSoon] = useState<IProduct[]>([])
+  const [replaceSoon, setReplaceSoon] =  useLocalStorage("repl-s-products", [])
   const handleEnter = () => {
     const product: IProduct = {
       name: input,
@@ -58,13 +58,13 @@ function App() {
     };
     setOpenedDate(new Date().toISOString().substring(0, 10))
     setOpenedProducts([...openedProducts, product]); //?how does it know what is product
-    const filteredUnopened = unopenedProducts.filter(product => product !== product); //! problem w this is multiple products with same name
+    const filteredUnopened = unopenedProducts.filter((product: IProduct) => product !== product); //! problem w this is multiple products with same name
     setUnopenedProducts(filteredUnopened)
   }
 
   const replaceSoonOpened = () => {  
-    const replaceSoonOpened = openedProducts.filter(product => product.months && parseInt(product.months)< 1)
-    const replaceSoonClosed = unopenedProducts.filter(product => product.expiryDate && differenceInMonths(new Date(product.expiryDate), new Date()) < 1)
+    const replaceSoonOpened = openedProducts.filter((product: IProduct) => product.months && parseInt(product.months)< 1)
+    const replaceSoonClosed = unopenedProducts.filter((product: IProduct) => product.expiryDate && differenceInMonths(new Date(product.expiryDate), new Date()) < 1)
     const replaceSoonAll = replaceSoonClosed.concat(replaceSoonOpened)
     setReplaceSoon(replaceSoonAll)
     //do i need to do a useffect so that every time it rerenders it shows the updated list, maybe everytime the months or current date changes?
