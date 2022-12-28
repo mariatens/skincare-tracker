@@ -72,6 +72,17 @@ function App() {
   useEffect (() => {
     replaceSoonOpened()
   }, [openedProducts, unopenedProducts])
+  
+  const handleDelete = (product: IProduct) =>{
+    const updatedOpen = openedProducts.filter((product: IProduct)=>product !== product)
+    const updatedUnopen = unopenedProducts.filter((product: IProduct)=>product !== product)
+    const updatedRplSoon = replaceSoon.filter((product: IProduct)=>product !== product)
+    setOpenedProducts(updatedOpen)
+    setUnopenedProducts(updatedUnopen)
+    setReplaceSoon(updatedRplSoon)
+  }
+
+
   return (
     <>
       <h1>Skincare Expiry Manager App</h1>
@@ -108,7 +119,7 @@ function App() {
       <div className = "container">
       {replaceSoon.map((product: IProduct, i: number) => (
           <div className="cell">
-            <Product key={i} product={product} />
+            <Product key={i} product={product} handleDelete = {()=> handleDelete(product)}/>
           </div>
         ))}
       </div>
@@ -116,7 +127,7 @@ function App() {
       <div className="container">
         {openedProducts.map((product: IProduct, i: number) => (
           <div className="cell">
-            <Product key={i} product={product} />
+            <Product key={i} product={product} handleDelete = {()=> handleDelete(product)}/>
           </div>
         ))}
       </div>
@@ -124,7 +135,7 @@ function App() {
       <div className="container">
         {unopenedProducts.map((product: IProduct, i: number) => (
           <div className="cell">
-            <Product key={i} product={product} handleSubmit = {()=>submit(product)} handleChangeToOpen= {()=>handleChangeToOpen(product)} isOpen = {isOpen} handleMonths={(e) => setMonths(e.target.value)} months = {months}/>
+            <Product key={i} product={product} handleDelete = {()=> handleDelete(product)} handleSubmit = {()=>submit(product)} handleChangeToOpen= {()=>handleChangeToOpen(product)} isOpen = {isOpen} handleMonths={(e) => setMonths(e.target.value)} months = {months}/>
           </div>
         ))}
       </div>
