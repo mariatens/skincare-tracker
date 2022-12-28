@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocalStorage } from "./utils/localStorage";
 import "./App.css";
 import { InputBar } from "./components/InputBar";
 import { Product } from "./components/Product";
 import { timeLeftOpened } from "./utils/timeLeftOpened";
+import { differenceInMonths } from "date-fns";
 
 export interface IProduct {
   openedDate: string;
@@ -23,7 +24,8 @@ function App() {
   );
   const [openedProducts, setOpenedProducts] = useState<IProduct[]>([]);
   const [unopenedProducts, setUnopenedProducts] = useState<IProduct[]>([]);
-
+  const [isOpen, setIsOpen] = useState(false);
+  const [replaceSoon, setReplaceSoon] = useState<IProduct[]>([])
   const handleEnter = () => {
     const product: IProduct = {
       name: input,
@@ -44,8 +46,6 @@ function App() {
     setMonths(undefined);
     setExpiryDate("");
   };
-  const [isOpen, setIsOpen] = useState(false);
-
 
   const handleChangeToOpen = (product: IProduct)=>{
     setIsOpen(!isOpen);     //to ask how many months it can remain opened
@@ -62,6 +62,16 @@ function App() {
     setUnopenedProducts(filteredUnopened)
   }
 
+  const replaceSoonOpened = () => {  
+    const replaceSoonOpened = openedProducts.filter(product => product.months && parseInt(product.months)< 1)
+    const replaceSoonClosed = unopenedProducts.filter(product => product.expiryDate && differenceInMonths(new Date(product.expiryDate), new Date()) < 1)
+    const replaceSoonAll = replaceSoonClosed.concat(replaceSoonOpened)
+    setReplaceSoon(replaceSoonAll)
+    //do i need to do a useffect so that every time it rerenders it shows the updated list, maybe everytime the months or current date changes?
+  }
+  useEffect (() => {
+    replaceSoonOpened()
+  }, [openedProducts, unopenedProducts])
   return (
     <>
       <h1>Skincare Expiry Manager App</h1>
@@ -94,6 +104,14 @@ function App() {
         openedDate={openedDate}
         expiryDate={expiryDate}
       />
+      <h1>Replace soon!</h1>
+      <div className = "container">
+      {replaceSoon.map((product: IProduct, i: number) => (
+          <div className="cell">
+            <Product key={i} product={product} />
+          </div>
+        ))}
+      </div>
       <h1>Opened products</h1>
       <div className="container">
         {openedProducts.map((product: IProduct, i: number) => (

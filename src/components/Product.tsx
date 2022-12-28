@@ -24,7 +24,7 @@ export function Product(props: ProductProps): JSX.Element {
       {props.product.expiryDate && (<>
         <h2 className = "time-remain">
           {timeLeftUnopened(props.product.expiryDate)}</h2>
-        <button onClick = {props.handleChangeToOpen}>I opened the product!</button>
+        <button className = "change-open" onClick = {props.handleChangeToOpen}>I opened the product!</button>
       </>
       )}
        {props.isOpen && (
@@ -39,7 +39,7 @@ export function Product(props: ProductProps): JSX.Element {
             <option value="3">3M</option>
           </select>
       </div>
-      <button onClick= {props.handleSubmit}>Submit </button>
+      <button className = "submit" onClick= {props.handleSubmit}>Submit </button>
       </>
     )}
     </>
