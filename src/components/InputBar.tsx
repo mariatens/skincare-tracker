@@ -1,4 +1,4 @@
-import '../App.css'
+import '../App.css';
 
 interface InputBarProps {
   //maybe change to product: IProduct and input as name. think this isn't sensible
@@ -20,7 +20,8 @@ interface InputBarProps {
 export function InputBar(props: InputBarProps): JSX.Element {
   return (
     <>
-      <input className="write-product"
+      <input
+        className="write-product"
         placeholder="Write your product here"
         value={props.input}
         onChange={props.onChange}
@@ -45,7 +46,7 @@ export function InputBar(props: InputBarProps): JSX.Element {
         <>
           <label>Duration: </label>
           <select value={props.months} onChange={props.handleMonths}>
-            <option value="Months">Months</option> 
+            <option value="Months">Months</option>
             <option value="24">24M</option>
             <option value="12">12M</option>
             <option value="6">6M</option>
@@ -53,7 +54,9 @@ export function InputBar(props: InputBarProps): JSX.Element {
           </select>
           <br></br>
           <label>
-            Date Opened: <input  className= "opened"
+            Date Opened:{' '}
+            <input
+              className="opened"
               type="date"
               value={props.openedDate}
               onChange={props.handleOpenedDate}
@@ -63,14 +66,19 @@ export function InputBar(props: InputBarProps): JSX.Element {
       )}
       {props.closed && (
         <label>
-          Expiry Date: <input
+          Expiry Date:{' '}
+          <input
             type="date"
             value={props.expiryDate}
             onChange={props.handleExpiryDate}
           />
         </label>
       )}
-      <button className= "enter-button" disabled = {props.input === ""} onClick={props.handleEnter}>
+      <button
+        className="enter-button"
+        disabled={props.input === ''}
+        onClick={props.handleEnter}
+      >
         Enter
       </button>
     </>

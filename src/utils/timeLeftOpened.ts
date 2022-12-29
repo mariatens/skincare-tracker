@@ -1,4 +1,4 @@
-import { addMonths, differenceInDays, differenceInMonths } from "date-fns";
+import { addMonths, differenceInDays, differenceInMonths } from 'date-fns';
 
 export function timeLeftOpened(openedDate: string, months: string): string {
   const expiryDate = addMonths(new Date(openedDate), parseInt(months));
