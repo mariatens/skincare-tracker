@@ -3,7 +3,6 @@ import { useLocalStorage } from './utils/localStorage';
 import './App.css';
 import { InputBar } from './components/InputBar';
 import { Product } from './components/Product';
-import { timeLeftOpened } from './utils/timeLeftOpened';
 import { differenceInMonths } from 'date-fns';
 
 export interface IProduct {
@@ -65,8 +64,8 @@ function App() {
     setOpenedDate(new Date().toISOString().substring(0, 10));
     setOpenedProducts([...openedProducts, product]); //?how does it know what is product
     const filteredUnopened = unopenedProducts.filter(
-      (product: IProduct) => product !== product
-    ); //! problem w this is multiple products with same name
+      (unProduct: IProduct) => product !== unProduct
+    ); 
     setUnopenedProducts(filteredUnopened);
   };
 
@@ -85,17 +84,17 @@ function App() {
   };
   useEffect(() => {
     replaceSoonOpened();
-  }, [openedProducts, unopenedProducts]);
+  });//TODO: look into it. [openedProducts, unopenedProducts] and empty [] gave error saying missing dependency
 
-  const handleDelete = (product: IProduct) => {
+  const handleDelete = (delProduct: IProduct) => {
     const updatedOpen = openedProducts.filter(
-      (product: IProduct) => product !== product
+      (product: IProduct) => product !== delProduct
     );
     const updatedUnopen = unopenedProducts.filter(
-      (product: IProduct) => product !== product
+      (product: IProduct) => product !== delProduct
     );
     const updatedRplSoon = replaceSoon.filter(
-      (product: IProduct) => product !== product
+      (product: IProduct) => product !== delProduct
     );
     setOpenedProducts(updatedOpen);
     setUnopenedProducts(updatedUnopen);
