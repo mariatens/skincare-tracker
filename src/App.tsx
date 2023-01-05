@@ -4,6 +4,7 @@ import './App.css';
 import { InputBar } from './components/InputBar';
 import { Product } from './components/Product';
 import { differenceInMonths } from 'date-fns';
+import { RplProduct } from './components/RplProduct';
 
 export interface IProduct {
   openedDate: string;
@@ -30,7 +31,7 @@ function App() {
     []
   );
   const [isOpen, setIsOpen] = useState(false);
-  const [replaceSoon, setReplaceSoon] = useLocalStorage('repl-s-products', []);
+  const [replaceSoonProducts, setReplaceSoonProducts] = useLocalStorage('repl-s-products', []);
   const handleEnter = () => {
     const product: IProduct = {
       name: input,
@@ -69,7 +70,7 @@ function App() {
     setUnopenedProducts(filteredUnopened);
   };
 
-  const replaceSoonOpened = () => {
+  const replaceSoon = () => {
     const replaceSoonOpened = openedProducts.filter(
       (product: IProduct) => product.months && parseInt(product.months) < 1
     );
@@ -79,11 +80,11 @@ function App() {
         differenceInMonths(new Date(product.expiryDate), new Date()) < 1
     );
     const replaceSoonAll = replaceSoonClosed.concat(replaceSoonOpened);
-    setReplaceSoon(replaceSoonAll);
+    setReplaceSoonProducts(replaceSoonAll);
     //do i need to do a useffect so that every time it rerenders it shows the updated list, maybe everytime the months or current date changes?
   };
   useEffect(() => {
-    replaceSoonOpened();
+    replaceSoon();
   });//TODO: look into it. [openedProducts, unopenedProducts] and empty [] gave error saying missing dependency
 
   const handleDelete = (delProduct: IProduct) => {
@@ -93,12 +94,12 @@ function App() {
     const updatedUnopen = unopenedProducts.filter(
       (product: IProduct) => product !== delProduct
     );
-    const updatedRplSoon = replaceSoon.filter(
+    const updatedRplSoon = replaceSoonProducts.filter(
       (product: IProduct) => product !== delProduct
     );
     setOpenedProducts(updatedOpen);
     setUnopenedProducts(updatedUnopen);
-    setReplaceSoon(updatedRplSoon);
+    setReplaceSoonProducts(updatedRplSoon);
   };
 
   return (
@@ -135,15 +136,8 @@ function App() {
       />
       <h1>Replace soon!</h1>
       <div className="container">
-        {replaceSoon.map((product: IProduct, i: number) => (
-          <div className="cell">
-            <Product
-              key={i}
-              product={product}
-              handleDelete={() => handleDelete(product)}
-            />
-          </div>
-        ))}
+        {replaceSoonProducts.map((product: IProduct, i: number) => (
+        <RplProduct product={product} handleDelete={handleDelete}  />))}
       </div>
       <h1>Opened products</h1>
       <div className="container">
@@ -153,6 +147,11 @@ function App() {
               key={i}
               product={product}
               handleDelete={() => handleDelete(product)}
+              handleSubmit={() => submit(product)}
+              handleChangeToOpen={() => handleChangeToOpen(product)}
+              isOpen={isOpen}
+              handleMonths={(e) => setMonths(e.target.value)}
+              months={months}
             />
           </div>
         ))}
@@ -174,8 +173,7 @@ function App() {
           </div>
         ))}
       </div>
-    </>
-  );
-}
+  </>
+  )}
 
 export default App;
