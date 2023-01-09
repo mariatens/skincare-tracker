@@ -1,3 +1,9 @@
+# Skincare Expiry App
+
+App that allows you to track when you open your skincare products and shows you the amount of time remaining until its expiration date.
+
+Link to deployed Netlify web: https://skincare-expiry-tracker.netlify.app/
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
