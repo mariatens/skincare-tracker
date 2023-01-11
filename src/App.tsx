@@ -14,8 +14,8 @@ export interface IProduct {
 }
 
 function App() {
-  const [input, setInput] = useState<string>('');
   const [opened, setOpened] = useState<boolean>(false);
+  const [input, setInput] = useState<string>('');
   const [closed, setClosed] = useState<boolean>(false);
   const [months, setMonths] = useState<string>('');
   const [expiryDate, setExpiryDate] = useState<string>('');
@@ -30,7 +30,6 @@ function App() {
     'unop-products',
     []
   );
-  const [isOpen, setIsOpen] = useState(false);
   const [replaceSoonProducts, setReplaceSoonProducts] = useLocalStorage(
     'repl-s-products',
     []
@@ -56,9 +55,7 @@ function App() {
     setExpiryDate('');
   };
 
-  const handleChangeToOpen = (product: IProduct) => {
-    setIsOpen(!isOpen); //to ask how many months it can remain opened
-  };
+  
   const submit = (product: IProduct) => {
     product = {
       months: months,
@@ -67,10 +64,12 @@ function App() {
     };
     setOpenedDate(new Date().toISOString().substring(0, 10));
     setOpenedProducts([...openedProducts, product]); //?how does it know what is product
+     //TODO: this filter is not working
     const filteredUnopened = unopenedProducts.filter(
       (unProduct: IProduct) => product !== unProduct
     );
     setUnopenedProducts(filteredUnopened);
+   
   };
 
   const replaceSoon = () => {
@@ -152,8 +151,6 @@ function App() {
               product={product}
               handleDelete={() => handleDelete(product)}
               handleSubmit={() => submit(product)}
-              handleChangeToOpen={() => handleChangeToOpen(product)}
-              isOpen={isOpen}
               handleMonths={(e) => setMonths(e.target.value)}
               months={months}
             />
@@ -169,8 +166,6 @@ function App() {
               product={product}
               handleDelete={() => handleDelete(product)}
               handleSubmit={() => submit(product)}
-              handleChangeToOpen={() => handleChangeToOpen(product)}
-              isOpen={isOpen}
               handleMonths={(e) => setMonths(e.target.value)}
               months={months}
             />
