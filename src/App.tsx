@@ -66,9 +66,11 @@ function App() {
     setOpenedProducts([...openedProducts, product]); //?how does it know what is product
      //TODO: this filter is not working
     const filteredUnopened = unopenedProducts.filter(
-      (unProduct: IProduct) => product !== unProduct
+      (unProduct: IProduct) => product === unProduct
     );
     setUnopenedProducts(filteredUnopened);
+    console.log(unopenedProducts)
+    console.log(product, "product")
    
   };
 
@@ -87,7 +89,7 @@ function App() {
   };
   useEffect(() => {
     replaceSoon();
-  }); //TODO: look into it. [openedProducts, unopenedProducts] and empty [] gave error saying missing dependency
+  }, []); //TODO: look into it. [openedProducts, unopenedProducts] and empty [] gave error saying missing dependency
 
   const handleDelete = (delProduct: IProduct) => {
     const updatedOpen = openedProducts.filter(
@@ -139,7 +141,7 @@ function App() {
       <h1>Replace soon!</h1>
       <div className="container">
         {replaceSoonProducts.map((product: IProduct, i: number) => (
-          <RplProduct product={product} handleDelete={handleDelete} />
+          <RplProduct key = {i} product={product} handleDelete={handleDelete} />
         ))}
       </div>
       <h1>Opened products</h1>
