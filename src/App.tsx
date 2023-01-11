@@ -69,8 +69,6 @@ function App() {
       (unProduct: IProduct) => product === unProduct
     );
     setUnopenedProducts(filteredUnopened);
-    console.log(unopenedProducts)
-    console.log(product, "product")
    
   };
 
@@ -105,6 +103,20 @@ function App() {
     setUnopenedProducts(updatedUnopen);
     setReplaceSoonProducts(updatedRplSoon);
   };
+  const handleOpened = (e: any) => {
+    setOpened(e.target.checked);
+    setClosed(false);
+    if (e.target.checked) {
+      setClosed(false);
+    }
+  }
+  const handleClosed = (e: any) => {
+    setOpened(false);
+    setClosed(e.target.checked);
+    if (e.target.checked) {
+      setOpened(false);
+    }
+  }
 
   return (
     <>
@@ -116,20 +128,8 @@ function App() {
         onChange={(e) => {
           setInput(e.target.value);
         }}
-        handleOpened={(e) => {
-          setOpened(e.target.checked);
-          setClosed(false);
-          if (e.target.checked) {
-            setClosed(false);
-          }
-        }}
-        handleClosed={(e) => {
-          setOpened(false);
-          setClosed(e.target.checked);
-          if (e.target.checked) {
-            setOpened(false);
-          }
-        }}
+        handleOpened={handleOpened}
+        handleClosed={handleClosed}
         opened={opened}
         closed={closed}
         handleEnter={handleEnter}
