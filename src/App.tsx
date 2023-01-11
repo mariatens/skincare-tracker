@@ -4,6 +4,7 @@ import './App.css';
 import { InputBar } from './components/InputBar';
 import { Product } from './components/Product';
 import { differenceInMonths } from 'date-fns';
+import { RplProduct } from './components/RplProduct';
 
 export interface IProduct {
   openedDate: string;
@@ -13,8 +14,8 @@ export interface IProduct {
 }
 
 function App() {
-  const [input, setInput] = useState<string>('');
   const [opened, setOpened] = useState<boolean>(false);
+  const [input, setInput] = useState<string>('');
   const [closed, setClosed] = useState<boolean>(false);
   const [months, setMonths] = useState<string>('');
   const [expiryDate, setExpiryDate] = useState<string>('');
@@ -29,8 +30,10 @@ function App() {
     'unop-products',
     []
   );
-  const [isOpen, setIsOpen] = useState(false);
-  const [replaceSoon, setReplaceSoon] = useLocalStorage('repl-s-products', []);
+  const [replaceSoonProducts, setReplaceSoonProducts] = useLocalStorage(
+    'repl-s-products',
+    []
+  );
   const handleEnter = () => {
     const product: IProduct = {
       name: input,
@@ -52,9 +55,7 @@ function App() {
     setExpiryDate('');
   };
 
-  const handleChangeToOpen = (product: IProduct) => {
-    setIsOpen(!isOpen); //to ask how many months it can remain opened
-  };
+  
   const submit = (product: IProduct) => {
     product = {
       months: months,
@@ -63,13 +64,15 @@ function App() {
     };
     setOpenedDate(new Date().toISOString().substring(0, 10));
     setOpenedProducts([...openedProducts, product]); //?how does it know what is product
+     //TODO: this filter is not working
     const filteredUnopened = unopenedProducts.filter(
-      (unProduct: IProduct) => product !== unProduct
-    ); 
+      (unProduct: IProduct) => product === unProduct
+    );
     setUnopenedProducts(filteredUnopened);
+   
   };
 
-  const replaceSoonOpened = () => {
+  const replaceSoon = () => {
     const replaceSoonOpened = openedProducts.filter(
       (product: IProduct) => product.months && parseInt(product.months) < 1
     );
@@ -79,12 +82,12 @@ function App() {
         differenceInMonths(new Date(product.expiryDate), new Date()) < 1
     );
     const replaceSoonAll = replaceSoonClosed.concat(replaceSoonOpened);
-    setReplaceSoon(replaceSoonAll);
+    setReplaceSoonProducts(replaceSoonAll);
     //do i need to do a useffect so that every time it rerenders it shows the updated list, maybe everytime the months or current date changes?
   };
   useEffect(() => {
-    replaceSoonOpened();
-  });//TODO: look into it. [openedProducts, unopenedProducts] and empty [] gave error saying missing dependency
+    replaceSoon();
+  }, []); //TODO: look into it. [openedProducts, unopenedProducts] and empty [] gave error saying missing dependency
 
   const handleDelete = (delProduct: IProduct) => {
     const updatedOpen = openedProducts.filter(
@@ -93,13 +96,27 @@ function App() {
     const updatedUnopen = unopenedProducts.filter(
       (product: IProduct) => product !== delProduct
     );
-    const updatedRplSoon = replaceSoon.filter(
+    const updatedRplSoon = replaceSoonProducts.filter(
       (product: IProduct) => product !== delProduct
     );
     setOpenedProducts(updatedOpen);
     setUnopenedProducts(updatedUnopen);
-    setReplaceSoon(updatedRplSoon);
+    setReplaceSoonProducts(updatedRplSoon);
   };
+  const handleOpened = (e: any) => {
+    setOpened(e.target.checked);
+    setClosed(false);
+    if (e.target.checked) {
+      setClosed(false);
+    }
+  }
+  const handleClosed = (e: any) => {
+    setOpened(false);
+    setClosed(e.target.checked);
+    if (e.target.checked) {
+      setOpened(false);
+    }
+  }
 
   return (
     <>
@@ -111,20 +128,8 @@ function App() {
         onChange={(e) => {
           setInput(e.target.value);
         }}
-        handleOpened={(e) => {
-          setOpened(e.target.checked);
-          setClosed(false);
-          if (e.target.checked) {
-            setClosed(false);
-          }
-        }}
-        handleClosed={(e) => {
-          setOpened(false);
-          setClosed(e.target.checked);
-          if (e.target.checked) {
-            setOpened(false);
-          }
-        }}
+        handleOpened={handleOpened}
+        handleClosed={handleClosed}
         opened={opened}
         closed={closed}
         handleEnter={handleEnter}
@@ -135,14 +140,8 @@ function App() {
       />
       <h1>Replace soon!</h1>
       <div className="container">
-        {replaceSoon.map((product: IProduct, i: number) => (
-          <div className="cell">
-            <Product
-              key={i}
-              product={product}
-              handleDelete={() => handleDelete(product)}
-            />
-          </div>
+        {replaceSoonProducts.map((product: IProduct, i: number) => (
+          <RplProduct key = {i} product={product} handleDelete={handleDelete} />
         ))}
       </div>
       <h1>Opened products</h1>
@@ -153,6 +152,9 @@ function App() {
               key={i}
               product={product}
               handleDelete={() => handleDelete(product)}
+              handleSubmit={() => submit(product)}
+              handleMonths={(e) => setMonths(e.target.value)}
+              months={months}
             />
           </div>
         ))}
@@ -166,8 +168,6 @@ function App() {
               product={product}
               handleDelete={() => handleDelete(product)}
               handleSubmit={() => submit(product)}
-              handleChangeToOpen={() => handleChangeToOpen(product)}
-              isOpen={isOpen}
               handleMonths={(e) => setMonths(e.target.value)}
               months={months}
             />
