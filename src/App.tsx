@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useLocalStorage } from './utils/localStorage';
 import './App.css';
 import { InputBar } from './components/InputBar';
@@ -72,7 +72,8 @@ function App() {
    
   };
 
-  const replaceSoon = () => {
+
+  const replaceSoon = useCallback(() => {
     const replaceSoonOpened = openedProducts.filter(
       (product: IProduct) => product.months && parseInt(product.months) < 1
     );
@@ -84,10 +85,10 @@ function App() {
     const replaceSoonAll = replaceSoonClosed.concat(replaceSoonOpened);
     setReplaceSoonProducts(replaceSoonAll);
     //do i need to do a useffect so that every time it rerenders it shows the updated list, maybe everytime the months or current date changes?
-  };
+  }, [openedProducts, setReplaceSoonProducts, unopenedProducts])
   useEffect(() => {
     replaceSoon();
-  }, []); //TODO: look into it. [openedProducts, unopenedProducts] and empty [] gave error saying missing dependency
+  }, [replaceSoon]); 
 
   const handleDelete = (delProduct: IProduct) => {
     const updatedOpen = openedProducts.filter(
