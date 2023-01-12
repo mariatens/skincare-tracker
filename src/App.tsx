@@ -142,15 +142,17 @@ function App() {
       <h1>Replace soon!</h1>
       <div className="container">
         {replaceSoonProducts.map((product: IProduct, i: number) => (
-          <RplProduct key = {i} product={product} handleDelete={handleDelete} />
+          <div key={i}>
+          <RplProduct key = {i} product={product} handleDelete={handleDelete}
+           />
+           </div>
         ))}
       </div>
       <h1>Opened products</h1>
       <div className="container">
         {openedProducts.map((product: IProduct, i: number) => (
-          <div className="cell">
+              <div className="cell"  key={i}>
             <Product
-              key={i}
               product={product}
               handleDelete={() => handleDelete(product)}
               handleSubmit={() => submit(product)}
@@ -163,9 +165,9 @@ function App() {
       <h1>Unopened products</h1>
       <div className="container">
         {unopenedProducts.map((product: IProduct, i: number) => (
-          <div className="cell">
+          <div className="cell" 
+          key={i}>
             <Product
-              key={i}
               product={product}
               handleDelete={() => handleDelete(product)}
               handleSubmit={() => submit(product)}
