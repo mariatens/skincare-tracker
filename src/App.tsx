@@ -5,6 +5,7 @@ import { InputBar } from './components/InputBar';
 import { Product } from './components/Product';
 import { differenceInMonths } from 'date-fns';
 import { RplProduct } from './components/RplProduct';
+import { NavBar, PageView } from './components/NavBar';
 
 export interface IProduct {
   openedDate: string;
@@ -14,6 +15,7 @@ export interface IProduct {
 }
 
 function App() {
+  const [view,setView] = useState<PageView>("Rpl")
   const [opened, setOpened] = useState<boolean>(false);
   const [input, setInput] = useState<string>('');
   const [closed, setClosed] = useState<boolean>(false);
@@ -64,7 +66,6 @@ function App() {
     };
     setOpenedDate(new Date().toISOString().substring(0, 10));
     setOpenedProducts([...openedProducts, product]); //?how does it know what is product
-     //TODO: this filter is not working
     const filteredUnopened = unopenedProducts.filter(
       (unProduct: IProduct) => product === unProduct
     );
@@ -84,7 +85,6 @@ function App() {
     );
     const replaceSoonAll = replaceSoonClosed.concat(replaceSoonOpened);
     setReplaceSoonProducts(replaceSoonAll);
-    //do i need to do a useffect so that every time it rerenders it shows the updated list, maybe everytime the months or current date changes?
   }, [openedProducts, setReplaceSoonProducts, unopenedProducts])
   useEffect(() => {
     replaceSoon();
@@ -121,7 +121,12 @@ function App() {
 
   return (
     <>
+    <div className = "nav-bar">
+      <NavBar  setView={setView}/>
+      </div>
       <h1>Skincare Expiry Manager App</h1>
+      <div>
+      </div>
       <InputBar
         handleMonths={(e) => setMonths(e.target.value)}
         months={months}
@@ -139,6 +144,8 @@ function App() {
         openedDate={openedDate}
         expiryDate={expiryDate}
       />
+      {view === "Rpl" &&
+      <>
       <h1>Replace soon!</h1>
       <div className="container">
         {replaceSoonProducts.map((product: IProduct, i: number) => (
@@ -147,7 +154,9 @@ function App() {
            />
            </div>
         ))}
-      </div>
+      </div></>}
+      {view === "Opened" && 
+      <>
       <h1>Opened products</h1>
       <div className="container">
         {openedProducts.map((product: IProduct, i: number) => (
@@ -161,8 +170,10 @@ function App() {
             />
           </div>
         ))}
-      </div>
-      <h1>Unopened products</h1>
+      </div></>}
+      {view === "Closed" &&
+      <>
+      <h1>Closed products</h1>
       <div className="container">
         {unopenedProducts.map((product: IProduct, i: number) => (
           <div className="cell" 
@@ -176,7 +187,7 @@ function App() {
             />
           </div>
         ))}
-      </div>
+      </div></>}
     </>
   );
 }
