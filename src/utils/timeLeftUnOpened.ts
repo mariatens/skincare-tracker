@@ -9,6 +9,6 @@ export function timeLeftUnopened(expiryDate: string): string {
       new Date()
     )} days left. Expiry date: ${expiryDate}`;
   } else {
-    return `${diffMonths} months left. Expiry date: ${expiryDate}`;
+    return `${diffMonths +1} months left. Expiry date: ${expiryDate}`;
   }
 }
