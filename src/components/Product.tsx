@@ -20,12 +20,13 @@ export function Product(props: ProductProps): JSX.Element {
   };
   return (
     <>
+    <div className = "product">
       <h1>{props.product.name}</h1>
-      <br></br>
+      <br/>
       {props.product.months && (
-        <h2 className="time-remain">
+        <p className="time-remain">
           {timeLeftOpened(props.product.openedDate, props.product.months)}
-        </h2>
+        </p>
       )}
       {props.product.expiryDate && (
         <>
@@ -55,6 +56,8 @@ export function Product(props: ProductProps): JSX.Element {
           </button>
         </>
       )}
+          </div>
+
     </>
   );
 }
