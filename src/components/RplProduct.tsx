@@ -13,21 +13,23 @@ export function RplProduct({
 }: RplProductProps): JSX.Element {
   return (
     <div className="cell">
+      <div className='product'>
       <h1>{product.name}</h1>
       <br></br>
       {product.months && (
-        <h2 className="time-remain">
+        <p className="time-remain">
           {timeLeftOpened(product.openedDate, product.months)}
-        </h2>
+        </p>
       )}
       {product.expiryDate && (
         <>
-          <h2 className="time-remain">
+          <p className="time-remain">
             {timeLeftUnopened(product.expiryDate)}
-          </h2>
+          </p>
         </>
       )}
       <button onClick={() => handleDelete(product)}>Delete</button>
+      </div>
     </div>
   );
 }

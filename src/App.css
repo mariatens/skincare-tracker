@@ -34,7 +34,27 @@ h1 {
   color: #00b8d4;
 }
 .nav-bar{
-  background-color: #00b8d4;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    background-color: #00b8d4;
+    color: #fff;
+    padding: 0 20px;
+  }
+  /* Navbar links */
+.nav-bar a {
+  color: #fff;
+  text-decoration: none;
+  margin-right: 20px;
+  font-size: 1.2rem;
+  cursor:pointer
+}
+
+
+/* Navbar brand */
+.navbar .brand {
+  font-size: 1.5rem;
 }
 
 h1:hover {

@@ -30,9 +30,9 @@ export function Product(props: ProductProps): JSX.Element {
       )}
       {props.product.expiryDate && (
         <>
-          <h2 className="time-remain">
+          <p className="time-remain">
             {timeLeftUnopened(props.product.expiryDate)}
-          </h2>
+          </p>
           <button className="change-open" onClick={()=>handleChangeToOpen(props.product)}>
             I opened the product!
           </button>
