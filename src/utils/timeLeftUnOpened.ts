@@ -4,11 +4,10 @@ import { differenceInMonths } from 'date-fns';
 export function timeLeftUnopened(expiryDate: string): string {
   const diffMonths = differenceInMonths(new Date(expiryDate), new Date());
   if (diffMonths < 1) {
-    return `${differenceInDays(
-      new Date(expiryDate),
-      new Date()
-    )} days left. Expiry date: ${expiryDate}`;
+    return `${
+      differenceInDays(new Date(expiryDate), new Date()) + 1
+    } days left. Expiry date: ${expiryDate}`;
   } else {
-    return `${diffMonths} months left. Expiry date: ${expiryDate}`;
+    return `${diffMonths + 1} months left. Expiry date: ${expiryDate}`;
   }
 }
