@@ -43,7 +43,7 @@ h1 {
   padding: 0 20px;
 }
 /* Navbar links */
-.nav-bar a {
+.nav-bar button {
   color: #fff;
   text-decoration: none;
   margin-right: 20px;

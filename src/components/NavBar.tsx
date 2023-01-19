@@ -8,9 +8,9 @@ export function NavBar({ setView }: NavBarProps) {
   return (
     <>
       <div className="nav-bar">
-        <a onClick={() => setView('Opened')}>Opened products</a>
-        <a onClick={() => setView('Closed')}>Closed products</a>
-        <a onClick={() => setView('Rpl')}>Replace Soon products</a>
+        <button onClick={() => setView('Opened')}>Opened products</button>
+        <button onClick={() => setView('Closed')}>Closed products</button>
+        <button onClick={() => setView('Rpl')}>Replace Soon products</button>
       </div>
     </>
   );
