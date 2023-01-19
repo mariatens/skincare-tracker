@@ -7,9 +7,10 @@ export function timeLeftOpened(openedDate: string, months: string): string {
     return `${differenceInDays(
       new Date(expiryDate),
       new Date()
-    )} days left. Expiry date: ${expiryDate.toISOString().substring(0, 10)}`;
+    )+1} days left. Expiry date: ${expiryDate.toISOString().substring(0, 10)}`;
   } else {
-    return `${monthsLeft +1} months left. Expiry date: ${expiryDate
+    return `${monthsLeft +1} months left. 
+    Expiry date: ${expiryDate
       .toISOString()
       .substring(0, 10)}`;
   }
