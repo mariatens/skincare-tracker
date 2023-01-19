@@ -15,7 +15,7 @@ export interface IProduct {
 }
 
 function App() {
-  const [view,setView] = useState<PageView>("Rpl")
+  const [view, setView] = useState<PageView>('Rpl');
   const [opened, setOpened] = useState<boolean>(false);
   const [input, setInput] = useState<string>('');
   const [closed, setClosed] = useState<boolean>(false);
@@ -57,7 +57,6 @@ function App() {
     setExpiryDate('');
   };
 
-  
   const submit = (product: IProduct) => {
     product = {
       months: months,
@@ -70,9 +69,7 @@ function App() {
       (unProduct: IProduct) => product === unProduct
     );
     setUnopenedProducts(filteredUnopened);
-   
   };
-
 
   const replaceSoon = useCallback(() => {
     const replaceSoonOpened = openedProducts.filter(
@@ -85,10 +82,10 @@ function App() {
     );
     const replaceSoonAll = replaceSoonClosed.concat(replaceSoonOpened);
     setReplaceSoonProducts(replaceSoonAll);
-  }, [openedProducts, setReplaceSoonProducts, unopenedProducts])
+  }, [openedProducts, setReplaceSoonProducts, unopenedProducts]);
   useEffect(() => {
     replaceSoon();
-  }, [replaceSoon]); 
+  }, [replaceSoon]);
 
   const handleDelete = (delProduct: IProduct) => {
     const updatedOpen = openedProducts.filter(
@@ -110,23 +107,22 @@ function App() {
     if (e.target.checked) {
       setClosed(false);
     }
-  }
+  };
   const handleClosed = (e: any) => {
     setOpened(false);
     setClosed(e.target.checked);
     if (e.target.checked) {
       setOpened(false);
     }
-  }
+  };
 
   return (
     <>
-    <div className = "nav-bar">
-      <NavBar  setView={setView}/>
+      <div className="nav-bar">
+        <NavBar setView={setView} />
       </div>
       <h1>Skincare Expiry Manager App</h1>
-      <div>
-      </div>
+      <div></div>
       <InputBar
         handleMonths={(e) => setMonths(e.target.value)}
         months={months}
@@ -144,50 +140,58 @@ function App() {
         openedDate={openedDate}
         expiryDate={expiryDate}
       />
-      {view === "Rpl" &&
-      <>
-      <h1>Replace soon!</h1>
-      <div className="container">
-        {replaceSoonProducts.map((product: IProduct, i: number) => (
-          <div key={i}>
-          <RplProduct key = {i} product={product} handleDelete={handleDelete}
-           />
-           </div>
-        ))}
-      </div></>}
-      {view === "Opened" && 
-      <>
-      <h1>Opened products</h1>
-      <div className="container">
-        {openedProducts.map((product: IProduct, i: number) => (
-              <div className="cell"  key={i}>
-            <Product
-              product={product}
-              handleDelete={() => handleDelete(product)}
-              handleSubmit={() => submit(product)}
-              handleMonths={(e) => setMonths(e.target.value)}
-              months={months}
-            />
+      {view === 'Rpl' && (
+        <>
+          <h1>Replace soon!</h1>
+          <div className="container">
+            {replaceSoonProducts.map((product: IProduct, i: number) => (
+              <div key={i}>
+                <RplProduct
+                  key={i}
+                  product={product}
+                  handleDelete={handleDelete}
+                />
+              </div>
+            ))}
           </div>
-        ))}
-      </div></>}
-      {view === "Closed" &&
-      <>
-      <h1>Closed products</h1>
-      <div className="container">
-        {unopenedProducts.map((product: IProduct, i: number) => (
-          <div className="cell" 
-          key={i}>
-            <Product
-              product={product}
-              handleDelete={() => handleDelete(product)}
-              handleSubmit={() => submit(product)}
-              handleMonths={(e) => setMonths(e.target.value)}
-              months={months}
-            />
+        </>
+      )}
+      {view === 'Opened' && (
+        <>
+          <h1>Opened products</h1>
+          <div className="container">
+            {openedProducts.map((product: IProduct, i: number) => (
+              <div className="cell" key={i}>
+                <Product
+                  product={product}
+                  handleDelete={() => handleDelete(product)}
+                  handleSubmit={() => submit(product)}
+                  handleMonths={(e) => setMonths(e.target.value)}
+                  months={months}
+                />
+              </div>
+            ))}
           </div>
-        ))}
-      </div></>}
+        </>
+      )}
+      {view === 'Closed' && (
+        <>
+          <h1>Closed products</h1>
+          <div className="container">
+            {unopenedProducts.map((product: IProduct, i: number) => (
+              <div className="cell" key={i}>
+                <Product
+                  product={product}
+                  handleDelete={() => handleDelete(product)}
+                  handleSubmit={() => submit(product)}
+                  handleMonths={(e) => setMonths(e.target.value)}
+                  months={months}
+                />
+              </div>
+            ))}
+          </div>
+        </>
+      )}
     </>
   );
 }

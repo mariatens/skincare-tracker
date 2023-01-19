@@ -27,8 +27,9 @@ export function InputBar(props: InputBarProps): JSX.Element {
         onChange={props.onChange}
       ></input>
       <br></br>
-      <label >Opened</label>
-      <input className = "opened"
+      <label>Opened</label>
+      <input
+        className="opened"
         type="checkbox"
         value="Opened"
         checked={props.opened}
