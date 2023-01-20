@@ -29,6 +29,16 @@ body {
   display: flex;
   text-align: center;
   justify-content: center;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.app-ctn {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 h1 {
@@ -36,12 +46,13 @@ h1 {
 }
 .nav-bar {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   height: 60px;
   background-color: #00b8d4;
   color: #fff;
   padding: 0 20px;
+  width: 700px;
 }
 /* Navbar links */
 .nav-bar button {
