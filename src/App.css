@@ -33,8 +33,7 @@ body {
   overflow-y: scroll;
 }
 
-
-.app-ctn{
+.app-ctn {
   width: 100vw;
   display: flex;
   flex-direction: column;
