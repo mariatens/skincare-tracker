@@ -19,7 +19,7 @@ interface InputBarProps {
 
 export function InputBar(props: InputBarProps): JSX.Element {
   return (
-    <>
+    <div>
       <input
         className="write-product"
         placeholder="Write your product here"
@@ -82,6 +82,6 @@ export function InputBar(props: InputBarProps): JSX.Element {
       >
         Enter
       </button>
-    </>
+    </div>
   );
 }

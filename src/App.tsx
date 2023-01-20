@@ -118,11 +118,11 @@ function App() {
 
   return (
     <>
+    <div className='app-ctn'>
       <div className="nav-bar">
         <NavBar setView={setView} />
       </div>
       <h1>Skincare Expiry Manager App</h1>
-      <div></div>
       <InputBar
         handleMonths={(e) => setMonths(e.target.value)}
         months={months}
@@ -192,6 +192,7 @@ function App() {
           </div>
         </>
       )}
+      </div>
     </>
   );
 }
