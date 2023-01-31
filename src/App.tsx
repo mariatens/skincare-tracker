@@ -64,7 +64,7 @@ function App() {
       name: product.name,
     };
     setOpenedDate(new Date().toISOString().substring(0, 10));
-    setOpenedProducts([...openedProducts, newProduct]); 
+    setOpenedProducts([...openedProducts, newProduct]);
     const filteredUnopened = unopenedProducts.filter(
       (unProduct: IProduct) => product !== unProduct
     );
