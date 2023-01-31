@@ -168,6 +168,7 @@ function App() {
                     handleSubmit={() => submit(product)}
                     handleMonths={(e) => setMonths(e.target.value)}
                     months={months}
+                    setMonths={setMonths}
                   />
                 </div>
               ))}
@@ -186,6 +187,7 @@ function App() {
                     handleSubmit={() => submit(product)}
                     handleMonths={(e) => setMonths(e.target.value)}
                     months={months}
+                    setMonths={setMonths}
                   />
                 </div>
               ))}

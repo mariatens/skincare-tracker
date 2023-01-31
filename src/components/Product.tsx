@@ -9,6 +9,7 @@ interface ProductProps {
   handleSubmit: () => void;
   handleMonths?: (e: any) => void;
   handleDelete: (product: IProduct) => void;
+  setMonths: React.Dispatch<React.SetStateAction<string>>
 }
 
 export function Product(props: ProductProps): JSX.Element {
@@ -55,7 +56,7 @@ export function Product(props: ProductProps): JSX.Element {
                 <option value="3">3M</option>
               </select>
             </div>
-            <button className="submit" onClick={props.handleSubmit}>
+            <button className="submit" onClick={()=> {props.handleSubmit(); setIsOpen(false); props.setMonths("")}}>
               Submit{' '}
             </button>
           </>
