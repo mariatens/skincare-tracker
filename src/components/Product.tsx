@@ -55,7 +55,13 @@ export function Product(props: ProductProps): JSX.Element {
                 <option value="3">3M</option>
               </select>
             </div>
-            <button className="submit" onClick={props.handleSubmit}>
+            <button
+              className="submit"
+              onClick={() => {
+                props.handleSubmit();
+                setIsOpen(false);
+              }}
+            >
               Submit{' '}
             </button>
           </>

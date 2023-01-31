@@ -10,8 +10,8 @@ import { NavBar, PageView } from './components/NavBar';
 export interface IProduct {
   openedDate: string;
   name: string;
-  months?: string | undefined;
-  expiryDate?: string | undefined;
+  months?: string;
+  expiryDate?: string;
 }
 
 function App() {
@@ -58,15 +58,15 @@ function App() {
   };
 
   const submit = (product: IProduct) => {
-    product = {
+    const newProduct = {
       months: months,
       openedDate: openedDate,
       name: product.name,
     };
     setOpenedDate(new Date().toISOString().substring(0, 10));
-    setOpenedProducts([...openedProducts, product]); //?how does it know what is product
+    setOpenedProducts([...openedProducts, newProduct]);
     const filteredUnopened = unopenedProducts.filter(
-      (unProduct: IProduct) => product === unProduct
+      (unProduct: IProduct) => product !== unProduct
     );
     setUnopenedProducts(filteredUnopened);
   };

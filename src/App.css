@@ -120,6 +120,12 @@ h1:hover {
   margin-top: 10px;
   border-radius: 20%;
 }
+
+.enter-button:disabled,
+.enter-button[disabled] {
+  color: #cccccc;
+  cursor: default;
+}
 .opened {
   margin-right: 10px;
 }
