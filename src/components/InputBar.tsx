@@ -77,7 +77,7 @@ export function InputBar(props: InputBarProps): JSX.Element {
       )}
       <button
         className="enter-button"
-        disabled={props.input === ''}
+        disabled={(props.input === '' || props.months === ""||props.months === "Months") &&props.expiryDate===""}
         onClick={props.handleEnter}
       >
         Enter

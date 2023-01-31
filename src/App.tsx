@@ -10,8 +10,8 @@ import { NavBar, PageView } from './components/NavBar';
 export interface IProduct {
   openedDate: string;
   name: string;
-  months?: string | undefined;
-  expiryDate?: string | undefined;
+  months?: string;
+  expiryDate?: string;
 }
 
 function App() {
