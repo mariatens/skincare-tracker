@@ -46,7 +46,7 @@ export function Product(props: ProductProps): JSX.Element {
         {isOpen && (
           <>
             <div>
-            <br/>
+              <br />
               <label>Duration</label>
               <select onChange={props.handleMonths}>
                 <option value="Months">Months</option>
@@ -56,7 +56,7 @@ export function Product(props: ProductProps): JSX.Element {
                 <option value="3">3M</option>
               </select>
             </div>
-            <br/>
+            <br />
             <button
               className="submit"
               onClick={() => {
