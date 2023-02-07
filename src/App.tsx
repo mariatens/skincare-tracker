@@ -1,11 +1,11 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useLocalStorage } from './utils/localStorage';
+import { useState } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
-import { InputBar } from './components/InputBar';
-import { Product } from './components/Product';
-import { differenceInMonths } from 'date-fns';
-import { RplProduct } from './components/RplProduct';
-import { NavBar, PageView } from './components/NavBar';
+import { ClosedProducts } from './components/ClosedProducts';
+import { HomePage } from './components/HomePage';
+import { OpenedProducts } from './components/OpenedProducts';
+import { ReplaceSoonProducts } from './components/ReplaceSoonProducts';
+import { useLocalStorage } from './utils/localStorage';
 
 export interface IProduct {
   openedDate: string;
@@ -13,17 +13,11 @@ export interface IProduct {
   months?: string;
   expiryDate?: string;
 }
+  
+
+
 
 function App() {
-  const [view, setView] = useState<PageView>('Rpl');
-  const [opened, setOpened] = useState<boolean>(false);
-  const [input, setInput] = useState<string>('');
-  const [closed, setClosed] = useState<boolean>(false);
-  const [months, setMonths] = useState<string>('');
-  const [expiryDate, setExpiryDate] = useState<string>('');
-  const [openedDate, setOpenedDate] = useState<string>(
-    new Date().toISOString().substring(0, 10)
-  );
   const [openedProducts, setOpenedProducts] = useLocalStorage(
     'skincare_tracker_open_products',
     []
@@ -36,56 +30,7 @@ function App() {
     'skincare_tracker_repl-soon-products',
     []
   );
-  const handleEnter = () => {
-    const product: IProduct = {
-      name: input,
-      openedDate: openedDate,
-      months: months,
-      expiryDate: expiryDate,
-    };
-    if (months) {
-      setOpenedProducts([...openedProducts, product]);
-    }
-    if (expiryDate) {
-      setUnopenedProducts([...unopenedProducts, product]);
-    }
-    setInput('');
-    setOpened(false);
-    setClosed(false);
-    setOpenedDate(new Date().toISOString().substring(0, 10));
-    setMonths('');
-    setExpiryDate('');
-  };
-
-  const submit = (product: IProduct) => {
-    const newProduct = {
-      months: months,
-      openedDate: openedDate,
-      name: product.name,
-    };
-    setOpenedDate(new Date().toISOString().substring(0, 10));
-    setOpenedProducts([...openedProducts, newProduct]);
-    const filteredUnopened = unopenedProducts.filter(
-      (unProduct: IProduct) => product !== unProduct
-    );
-    setUnopenedProducts(filteredUnopened);
-  };
-
-  const replaceSoon = useCallback(() => {
-    const replaceSoonOpened = openedProducts.filter(
-      (product: IProduct) => product.months && parseInt(product.months) < 1
-    );
-    const replaceSoonClosed = unopenedProducts.filter(
-      (product: IProduct) =>
-        product.expiryDate &&
-        differenceInMonths(new Date(product.expiryDate), new Date()) < 1
-    );
-    const replaceSoonAll = replaceSoonClosed.concat(replaceSoonOpened);
-    setReplaceSoonProducts(replaceSoonAll);
-  }, [openedProducts, setReplaceSoonProducts, unopenedProducts]);
-  useEffect(() => {
-    replaceSoon();
-  }, [replaceSoon]);
+  const [months, setMonths] = useState<string>('');
 
   const handleDelete = (delProduct: IProduct) => {
     const updatedOpen = openedProducts.filter(
@@ -101,99 +46,32 @@ function App() {
     setUnopenedProducts(updatedUnopen);
     setReplaceSoonProducts(updatedRplSoon);
   };
-  const handleOpened = (e: any) => {
-    setOpened(e.target.checked);
-    setClosed(false);
-    if (e.target.checked) {
-      setClosed(false);
-    }
+  const submit = (product: IProduct) => {
+    const newProduct = {
+      months: months,
+      openedDate: openedDate,
+      name: product.name,
+    };
+    setOpenedDate(new Date().toISOString().substring(0, 10));
+    setOpenedProducts([...openedProducts, newProduct]);
+    const filteredUnopened = unopenedProducts.filter(
+      (unProduct: IProduct) => product !== unProduct
+    );
+    setUnopenedProducts(filteredUnopened);
   };
-  const handleClosed = (e: any) => {
-    setOpened(false);
-    setClosed(e.target.checked);
-    if (e.target.checked) {
-      setOpened(false);
-    }
-  };
-
+  const [openedDate, setOpenedDate] = useState<string>(
+    new Date().toISOString().substring(0, 10)
+  );
   return (
-    <>
-      <div className="app-ctn">
-        <div className="nav-bar">
-          <NavBar setView={setView} />
-        </div>
-        <h1>Skincare Expiry Manager App</h1>
-        <InputBar
-          handleMonths={(e) => setMonths(e.target.value)}
-          months={months}
-          input={input}
-          onChange={(e) => {
-            setInput(e.target.value);
-          }}
-          handleOpened={handleOpened}
-          handleClosed={handleClosed}
-          opened={opened}
-          closed={closed}
-          handleEnter={handleEnter}
-          handleExpiryDate={(e) => setExpiryDate(e.target.value)}
-          handleOpenedDate={(e) => setOpenedDate(e.target.value)}
-          openedDate={openedDate}
-          expiryDate={expiryDate}
-        />
-        {view === 'Rpl' && (
-          <>
-            <h1>Replace soon!</h1>
-            <div className="container">
-              {replaceSoonProducts.map((product: IProduct, i: number) => (
-                <div key={i}>
-                  <RplProduct
-                    key={i}
-                    product={product}
-                    handleDelete={handleDelete}
-                  />
-                </div>
-              ))}
-            </div>
-          </>
-        )}
-        {view === 'Opened' && (
-          <>
-            <h1>Opened products</h1>
-            <div className="container">
-              {openedProducts.map((product: IProduct, i: number) => (
-                <div className="cell" key={i}>
-                  <Product
-                    product={product}
-                    handleDelete={() => handleDelete(product)}
-                    handleSubmit={() => submit(product)}
-                    handleMonths={(e) => setMonths(e.target.value)}
-                    months={months}
-                  />
-                </div>
-              ))}
-            </div>
-          </>
-        )}
-        {view === 'Closed' && (
-          <>
-            <h1>Closed products</h1>
-            <div className="container">
-              {unopenedProducts.map((product: IProduct, i: number) => (
-                <div className="cell" key={i}>
-                  <Product
-                    product={product}
-                    handleDelete={() => handleDelete(product)}
-                    handleSubmit={() => submit(product)}
-                    handleMonths={(e) => setMonths(e.target.value)}
-                    months={months}
-                  />
-                </div>
-              ))}
-            </div>
-          </>
-        )}
-      </div>
-    </>
+      <BrowserRouter>
+  
+        <Routes>
+          <Route path="/"element={<HomePage unopenedProducts={unopenedProducts}months={months} openedDate={openedDate} openedProducts={openedProducts} setMonths={setMonths} setOpenedDate={setOpenedDate} setOpenedProducts={setOpenedProducts} setReplaceSoonProducts={setReplaceSoonProducts} setUnopenedProducts={setUnopenedProducts}/>}/>
+          <Route path="opened-products" element={<OpenedProducts handleDelete={handleDelete} months={months} openedProducts={openedProducts} setMonths={setMonths} submit={submit}/>}/>
+          <Route path="closed-products" element={<ClosedProducts handleDelete={handleDelete} months={months} setMonths={setMonths} submit={submit} unopenedProducts={unopenedProducts}/>}/>
+          <Route path="replace-soon-products" element={<ReplaceSoonProducts handleDelete={handleDelete} replaceSoonProducts={replaceSoonProducts}/>}/>
+        </Routes>
+      </BrowserRouter>
   );
 }
 

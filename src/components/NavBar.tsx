@@ -1,16 +1,15 @@
-export type PageView = 'Rpl' | 'Opened' | 'Closed';
+import { useNavigate } from 'react-router-dom';
 
-interface NavBarProps {
-  setView: React.Dispatch<React.SetStateAction<PageView>>;
-}
 
-export function NavBar({ setView }: NavBarProps) {
+export function NavBar() {
+  let navigate = useNavigate();
+  
   return (
     <>
       <div className="nav-bar">
-        <button onClick={() => setView('Opened')}>Opened products</button>
-        <button onClick={() => setView('Closed')}>Closed products</button>
-        <button onClick={() => setView('Rpl')}>Replace Soon products</button>
+        <button onClick={() => navigate("opened-products")}>Opened products</button>
+        <button onClick={() => navigate("closed-products")}>Closed products</button>
+        <button onClick={() => navigate("replace-soon-products")}>Replace Soon products</button>
       </div>
     </>
   );
