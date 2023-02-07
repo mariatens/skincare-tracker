@@ -25,15 +25,15 @@ function App() {
     new Date().toISOString().substring(0, 10)
   );
   const [openedProducts, setOpenedProducts] = useLocalStorage(
-    'op-products',
+    'skincare_tracker_open_products',
     []
   );
   const [unopenedProducts, setUnopenedProducts] = useLocalStorage(
-    'unop-products',
+    'skincare_tracker_unopened_products',
     []
   );
   const [replaceSoonProducts, setReplaceSoonProducts] = useLocalStorage(
-    'repl-s-products',
+    'skincare_tracker_repl-soon-products',
     []
   );
   const handleEnter = () => {
