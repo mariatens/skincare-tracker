@@ -13,9 +13,6 @@ export interface IProduct {
   months?: string;
   expiryDate?: string;
 }
-  
-
-
 
 function App() {
   const [openedProducts, setOpenedProducts] = useLocalStorage(
@@ -63,15 +60,59 @@ function App() {
     new Date().toISOString().substring(0, 10)
   );
   return (
-      <BrowserRouter>
-  
-        <Routes>
-          <Route path="/"element={<HomePage unopenedProducts={unopenedProducts}months={months} openedDate={openedDate} openedProducts={openedProducts} setMonths={setMonths} setOpenedDate={setOpenedDate} setOpenedProducts={setOpenedProducts} setReplaceSoonProducts={setReplaceSoonProducts} setUnopenedProducts={setUnopenedProducts}/>}/>
-          <Route path="opened-products" element={<OpenedProducts handleDelete={handleDelete} months={months} openedProducts={openedProducts} setMonths={setMonths} submit={submit}/>}/>
-          <Route path="closed-products" element={<ClosedProducts handleDelete={handleDelete} months={months} setMonths={setMonths} submit={submit} unopenedProducts={unopenedProducts}/>}/>
-          <Route path="replace-soon-products" element={<ReplaceSoonProducts handleDelete={handleDelete} replaceSoonProducts={replaceSoonProducts}/>}/>
-        </Routes>
-      </BrowserRouter>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <HomePage
+              unopenedProducts={unopenedProducts}
+              months={months}
+              openedDate={openedDate}
+              openedProducts={openedProducts}
+              setMonths={setMonths}
+              setOpenedDate={setOpenedDate}
+              setOpenedProducts={setOpenedProducts}
+              setReplaceSoonProducts={setReplaceSoonProducts}
+              setUnopenedProducts={setUnopenedProducts}
+            />
+          }
+        />
+        <Route
+          path="opened-products"
+          element={
+            <OpenedProducts
+              handleDelete={handleDelete}
+              months={months}
+              openedProducts={openedProducts}
+              setMonths={setMonths}
+              submit={submit}
+            />
+          }
+        />
+        <Route
+          path="closed-products"
+          element={
+            <ClosedProducts
+              handleDelete={handleDelete}
+              months={months}
+              setMonths={setMonths}
+              submit={submit}
+              unopenedProducts={unopenedProducts}
+            />
+          }
+        />
+        <Route
+          path="replace-soon-products"
+          element={
+            <ReplaceSoonProducts
+              handleDelete={handleDelete}
+              replaceSoonProducts={replaceSoonProducts}
+            />
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
