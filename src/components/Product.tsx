@@ -15,7 +15,7 @@ export function Product(props: ProductProps): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleChangeToOpen = () => {
-    setIsOpen(!isOpen); //to ask how many months it can remain opened
+    setIsOpen(true); 
   };
   return (
     <>

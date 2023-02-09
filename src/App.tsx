@@ -1,4 +1,4 @@
-import { addMonths } from 'date-fns';
+import { addMonths, differenceInMonths } from 'date-fns';
 import { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
@@ -7,6 +7,7 @@ import { HomePage } from './components/HomePage';
 import { OpenedProducts } from './components/OpenedProducts';
 import { ReplaceSoonProducts } from './components/ReplaceSoonProducts';
 import { useLocalStorage } from './utils/localStorage';
+import { timeLeftOpened } from './utils/timeLeftOpened';
 
 export interface IProduct {
   openedDate: string;
@@ -71,11 +72,13 @@ function App() {
           setUnopenedProducts(filteredUnopened);
           setMonths('');
     }else {
+      const months = differenceInMonths(new Date(product.expiryDate!), new Date()).toString()
       const newProduct = {
-        expiryDate: product.expiryDate,
+        months:  timeLeftOpened(openedDate, months),
         openedDate: openedDate,
         name: product.name,
       };
+     
       alert("The product needs to remain opened less than that amount of months because the expiry date is sooner! The product will be opened but will keep the same expiry date")
       setOpenedDate(new Date().toISOString().substring(0, 10));
       setOpenedProducts([...openedProducts, newProduct]);
