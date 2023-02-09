@@ -57,43 +57,50 @@ function App() {
       name: product.name,
     };
     // if the expiry date is sooner than the amount of months it can remain opened, give warning that it can't remain opened for as long
-    const newExpiryDate = addMonths(new Date(product.openedDate), parseInt(months))
-    const expiryDateObj = new Date(product.expiryDate!)
+    const newExpiryDate = addMonths(
+      new Date(product.openedDate),
+      parseInt(months)
+    );
+    const expiryDateObj = new Date(product.expiryDate!);
     if (expiryDateObj >= newExpiryDate) {
       setOpenedDate(new Date().toISOString().substring(0, 10));
       setOpenedProducts([...openedProducts, newProduct]);
       const filteredUnopened = unopenedProducts.filter(
         (unProduct: IProduct) => product !== unProduct
-        );
-        const filteredReplaceSoon = replaceSoonProducts.filter(
-          (unProduct: IProduct) => product !== unProduct
-          );
-          setReplaceSoonProducts(filteredReplaceSoon)
-          setUnopenedProducts(filteredUnopened);
-          setMonths('');
-    }else {
-      const months = differenceInMonths(new Date(product.expiryDate!), new Date()).toString()
+      );
+      const filteredReplaceSoon = replaceSoonProducts.filter(
+        (unProduct: IProduct) => product !== unProduct
+      );
+      setReplaceSoonProducts(filteredReplaceSoon);
+      setUnopenedProducts(filteredUnopened);
+      setMonths('');
+    } else {
+      const months = differenceInMonths(
+        new Date(product.expiryDate!),
+        new Date()
+      ).toString();
       const newProduct = {
-        months:  timeLeftOpened(openedDate, months),
+        months: timeLeftOpened(openedDate, months),
         openedDate: openedDate,
         name: product.name,
       };
-     
-      alert("The product needs to remain opened less than that amount of months because the expiry date is sooner! The product will be opened but will keep the same expiry date")
+
+      alert(
+        'The product needs to remain opened less than that amount of months because the expiry date is sooner! The product will be opened but will keep the same expiry date'
+      );
       setOpenedDate(new Date().toISOString().substring(0, 10));
       setOpenedProducts([...openedProducts, newProduct]);
       const filteredUnopened = unopenedProducts.filter(
         (unProduct: IProduct) => product !== unProduct
-        );
-        const filteredReplaceSoon = replaceSoonProducts.filter(
-          (unProduct: IProduct) => product !== unProduct
-          );
-          setReplaceSoonProducts(filteredReplaceSoon)
-          setUnopenedProducts(filteredUnopened);
-          setMonths('');
+      );
+      const filteredReplaceSoon = replaceSoonProducts.filter(
+        (unProduct: IProduct) => product !== unProduct
+      );
+      setReplaceSoonProducts(filteredReplaceSoon);
+      setUnopenedProducts(filteredUnopened);
+      setMonths('');
     }
   };
-
 
   return (
     <BrowserRouter>

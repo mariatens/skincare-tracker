@@ -15,7 +15,7 @@ export function Product(props: ProductProps): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleChangeToOpen = () => {
-    setIsOpen(true); 
+    setIsOpen(true);
   };
   return (
     <>

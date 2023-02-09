@@ -14,7 +14,7 @@ export function ReplaceSoonProducts({
   handleDelete,
   submit,
   setMonths,
-  months
+  months,
 }: ReplaceSoonProductsProps): JSX.Element {
   let navigate = useNavigate();
 
@@ -25,7 +25,14 @@ export function ReplaceSoonProducts({
       <div className="container">
         {replaceSoonProducts.map((product: IProduct, i: number) => (
           <div key={i}>
-            <Product handleSubmit={()=>submit(product)} handleMonths={(e)=>setMonths(e.target.value)} months= {months} key={i} product={product} handleDelete={handleDelete} />
+            <Product
+              handleSubmit={() => submit(product)}
+              handleMonths={(e) => setMonths(e.target.value)}
+              months={months}
+              key={i}
+              product={product}
+              handleDelete={handleDelete}
+            />
           </div>
         ))}
       </div>
