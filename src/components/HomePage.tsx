@@ -8,9 +8,9 @@ interface HomePageProps {
   openedDate: string;
   months: string;
   openedProducts: IProduct[];
+  closedProducts: IProduct[];
   setOpenedProducts: React.Dispatch<any>;
-  unopenedProducts: IProduct[];
-  setUnopenedProducts: React.Dispatch<any>;
+  setClosedProducts: React.Dispatch<any>;
   setOpenedDate: (value: React.SetStateAction<string>) => void;
   setMonths: (value: React.SetStateAction<string>) => void;
   setReplaceSoonProducts: React.Dispatch<any>;
@@ -20,9 +20,9 @@ export function HomePage({
   openedDate,
   months,
   openedProducts,
+  closedProducts,
   setOpenedProducts,
-  unopenedProducts,
-  setUnopenedProducts,
+  setClosedProducts,
   setOpenedDate,
   setMonths,
   setReplaceSoonProducts,
@@ -31,6 +31,7 @@ export function HomePage({
   const [input, setInput] = useState<string>('');
   const [closed, setClosed] = useState<boolean>(false);
   const [expiryDate, setExpiryDate] = useState<string>('');
+
   const handleEnter = () => {
     const product: IProduct = {
       name: input,
@@ -42,7 +43,7 @@ export function HomePage({
       setOpenedProducts([...openedProducts, product]);
     }
     if (expiryDate) {
-      setUnopenedProducts([...unopenedProducts, product]);
+      setClosedProducts([...closedProducts, product]);
     }
     setInput('');
     setOpened(false);
@@ -56,19 +57,14 @@ export function HomePage({
     const replaceSoonOpened = openedProducts.filter(
       (product: IProduct) => product.months && parseInt(product.months) < 1
     );
-    const replaceSoonClosed = unopenedProducts.filter(
+    const replaceSoonClosed = closedProducts.filter(
       (product: IProduct) =>
         product.expiryDate &&
         differenceInMonths(new Date(product.expiryDate), new Date()) < 1
     );
     const replaceSoonAll = replaceSoonClosed.concat(replaceSoonOpened);
     setReplaceSoonProducts(replaceSoonAll);
-  }, [openedProducts, setReplaceSoonProducts, unopenedProducts]);
-
-  useEffect(() => {
-    replaceSoon();
-    setMonths('');
-  }, [replaceSoon, setMonths]);
+  }, [openedProducts, setReplaceSoonProducts, closedProducts]);
 
   const handleOpened = (e: any) => {
     setOpened(e.target.checked);
@@ -77,6 +73,7 @@ export function HomePage({
       setClosed(false);
     }
   };
+  
   const handleClosed = (e: any) => {
     setOpened(false);
     setClosed(e.target.checked);
@@ -84,6 +81,12 @@ export function HomePage({
       setOpened(false);
     }
   };
+
+  useEffect(() => {
+    replaceSoon();
+    setMonths('');
+  }, [replaceSoon, setMonths]);
+
   return (
     <>
       <div className="app-ctn">
@@ -92,18 +95,18 @@ export function HomePage({
         <br />
         <InputBar
           handleMonths={(e) => setMonths(e.target.value)}
-          months={months}
-          input={input}
           onChange={(e) => {
             setInput(e.target.value);
           }}
           handleOpened={handleOpened}
           handleClosed={handleClosed}
-          opened={opened}
-          closed={closed}
           handleEnter={handleEnter}
           handleExpiryDate={(e) => setExpiryDate(e.target.value)}
           handleOpenedDate={(e) => setOpenedDate(e.target.value)}
+          opened={opened}
+          closed={closed}
+          months={months}
+          input={input}
           openedDate={openedDate}
           expiryDate={expiryDate}
         />

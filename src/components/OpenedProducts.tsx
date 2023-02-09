@@ -3,19 +3,19 @@ import { Product } from './Product';
 import { useNavigate } from 'react-router-dom';
 
 interface OpenedProductsProps {
-  openedProducts: IProduct[];
   handleDelete: (product: IProduct) => void;
   submit: (product: IProduct) => void;
   setMonths: (value: React.SetStateAction<string>) => void;
   months: string;
+  openedProducts: IProduct[];
 }
 
 export function OpenedProducts({
-  openedProducts,
   handleDelete,
   submit,
   setMonths,
   months,
+  openedProducts
 }: OpenedProductsProps): JSX.Element {
   let navigate = useNavigate();
   return (
@@ -27,10 +27,10 @@ export function OpenedProducts({
           <div className="cell" key={i}>
             <Product
               product={product}
+              months={months}
               handleDelete={() => handleDelete(product)}
               handleSubmit={() => submit(product)}
               handleMonths={(e) => setMonths(e.target.value)}
-              months={months}
             />
           </div>
         ))}
