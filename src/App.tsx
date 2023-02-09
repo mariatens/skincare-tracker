@@ -29,6 +29,10 @@ function App() {
   );
   const [months, setMonths] = useState<string>('');
 
+  const [openedDate, setOpenedDate] = useState<string>(
+    new Date().toISOString().substring(0, 10)
+  );
+
   const handleDelete = (delProduct: IProduct) => {
     const updatedOpen = openedProducts.filter(
       (product: IProduct) => product !== delProduct
@@ -43,6 +47,7 @@ function App() {
     setUnopenedProducts(updatedUnopen);
     setReplaceSoonProducts(updatedRplSoon);
   };
+
   const submit = (product: IProduct) => {
     const newProduct = {
       months: months,
@@ -54,11 +59,15 @@ function App() {
     const filteredUnopened = unopenedProducts.filter(
       (unProduct: IProduct) => product !== unProduct
     );
+    const filteredReplaceSoon = replaceSoonProducts.filter(
+      (unProduct: IProduct) => product !== unProduct
+    );
+    setReplaceSoonProducts(filteredReplaceSoon)
     setUnopenedProducts(filteredUnopened);
+    setMonths('');
   };
-  const [openedDate, setOpenedDate] = useState<string>(
-    new Date().toISOString().substring(0, 10)
-  );
+
+
   return (
     <BrowserRouter>
       <Routes>
@@ -108,6 +117,9 @@ function App() {
             <ReplaceSoonProducts
               handleDelete={handleDelete}
               replaceSoonProducts={replaceSoonProducts}
+              setMonths={setMonths}
+              submit={submit}
+              months={months}
             />
           }
         />
