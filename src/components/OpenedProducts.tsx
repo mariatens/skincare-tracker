@@ -15,7 +15,7 @@ export function OpenedProducts({
   submit,
   setMonths,
   months,
-  openedProducts
+  openedProducts,
 }: OpenedProductsProps): JSX.Element {
   let navigate = useNavigate();
   return (

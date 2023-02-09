@@ -17,7 +17,7 @@ export function Product(props: ProductProps): JSX.Element {
   const handleChangeToOpen = () => {
     setIsOpen(true);
   };
-  
+
   return (
     <>
       <div className="product">
@@ -25,7 +25,10 @@ export function Product(props: ProductProps): JSX.Element {
         <br />
         {props.product.months && (
           <p className="time-remain">
-            {calculateTimeLeftOpenedProducts(props.product.openedDate, props.product.months)}
+            {calculateTimeLeftOpenedProducts(
+              props.product.openedDate,
+              props.product.months
+            )}
           </p>
         )}
         {props.product.expiryDate && (

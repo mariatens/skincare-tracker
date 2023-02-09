@@ -1,6 +1,9 @@
 import { addMonths, differenceInDays, differenceInMonths } from 'date-fns';
 
-export function calculateTimeLeftOpenedProducts(openedDate: string, months: string): string {
+export function calculateTimeLeftOpenedProducts(
+  openedDate: string,
+  months: string
+): string {
   const expiryDate = addMonths(new Date(openedDate), parseInt(months));
   const monthsLeft = differenceInMonths(new Date(expiryDate), new Date());
   if (monthsLeft < 1) {

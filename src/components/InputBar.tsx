@@ -25,7 +25,7 @@ export function InputBar(props: InputBarProps): JSX.Element {
         value={props.input}
         onChange={props.onChange}
       ></input>
-      <br/>
+      <br />
       <label>Opened</label>
       <input
         className="opened"
@@ -41,7 +41,7 @@ export function InputBar(props: InputBarProps): JSX.Element {
         checked={props.closed}
         onChange={props.handleClosed}
       ></input>
-      <br/>
+      <br />
       {props.opened && (
         <>
           <label>Duration: </label>
@@ -52,7 +52,7 @@ export function InputBar(props: InputBarProps): JSX.Element {
             <option value="6">6M</option>
             <option value="3">3M</option>
           </select>
-          <br/>
+          <br />
           <label>
             Date Opened:{' '}
             <input

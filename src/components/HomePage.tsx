@@ -73,7 +73,7 @@ export function HomePage({
       setClosed(false);
     }
   };
-  
+
   const handleClosed = (e: any) => {
     setOpened(false);
     setClosed(e.target.checked);

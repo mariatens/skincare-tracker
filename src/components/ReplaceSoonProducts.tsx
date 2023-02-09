@@ -11,10 +11,10 @@ interface ReplaceSoonProductsProps {
 }
 export function ReplaceSoonProducts({
   replaceSoonProducts,
+  months,
   handleDelete,
   submit,
   setMonths,
-  months,
 }: ReplaceSoonProductsProps): JSX.Element {
   let navigate = useNavigate();
 
