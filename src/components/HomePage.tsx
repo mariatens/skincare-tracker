@@ -64,9 +64,11 @@ export function HomePage({
     const replaceSoonAll = replaceSoonClosed.concat(replaceSoonOpened);
     setReplaceSoonProducts(replaceSoonAll);
   }, [openedProducts, setReplaceSoonProducts, unopenedProducts]);
+
   useEffect(() => {
     replaceSoon();
-  }, [replaceSoon]);
+    setMonths('');
+  }, [replaceSoon, setMonths]);
 
   const handleOpened = (e: any) => {
     setOpened(e.target.checked);
