@@ -29,7 +29,6 @@ export function ClosedProducts({
           <div className="cell" key={i}>
             <Product
               product={product}
-              months={months}
               handleDelete={() => handleDelete(product)}
               handleSubmit={() => submit(product)}
               handleMonths={(e) => setMonths(e.target.value)}

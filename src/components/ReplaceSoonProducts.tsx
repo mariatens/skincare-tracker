@@ -26,7 +26,6 @@ export function ReplaceSoonProducts({
         {replaceSoonProducts.map((product: IProduct, i: number) => (
           <div key={i}>
             <Product
-              months={months}
               product={product}
               handleDelete={handleDelete}
               handleSubmit={() => submit(product)}

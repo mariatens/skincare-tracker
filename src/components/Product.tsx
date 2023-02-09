@@ -5,7 +5,6 @@ import { calculateTimeLeftOpenedProducts } from '../utils/timeLeftOpened';
 
 interface ProductProps {
   product: IProduct;
-  months?: string;
   handleSubmit: () => void;
   handleMonths?: (e: any) => void;
   handleDelete: (product: IProduct) => void;
