@@ -14,7 +14,7 @@ interface ProductProps {
 export function Product(props: ProductProps): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleChangeToOpen = (product: IProduct) => {
+  const handleChangeToOpen = () => {
     setIsOpen(!isOpen); //to ask how many months it can remain opened
   };
   return (
@@ -34,7 +34,7 @@ export function Product(props: ProductProps): JSX.Element {
             </p>
             <button
               className="change-open"
-              onClick={() => handleChangeToOpen(props.product)}
+              onClick={() => handleChangeToOpen()}
             >
               I opened the product!
             </button>

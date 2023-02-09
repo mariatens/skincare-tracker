@@ -1,3 +1,4 @@
+import { addMonths } from 'date-fns';
 import { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
@@ -54,17 +55,25 @@ function App() {
       openedDate: openedDate,
       name: product.name,
     };
-    setOpenedDate(new Date().toISOString().substring(0, 10));
-    setOpenedProducts([...openedProducts, newProduct]);
-    const filteredUnopened = unopenedProducts.filter(
-      (unProduct: IProduct) => product !== unProduct
-    );
-    const filteredReplaceSoon = replaceSoonProducts.filter(
-      (unProduct: IProduct) => product !== unProduct
-    );
-    setReplaceSoonProducts(filteredReplaceSoon)
-    setUnopenedProducts(filteredUnopened);
-    setMonths('');
+    // if the expiry date is sooner than the amount of months it can remain opened, give warning that it can't remain opened for as long
+    const newExpiryDate = addMonths(new Date(product.openedDate), parseInt(months))
+    const expiryDateObj = new Date(product.expiryDate!)
+    console.log(months)
+    if (expiryDateObj >= newExpiryDate) {
+      setOpenedDate(new Date().toISOString().substring(0, 10));
+      setOpenedProducts([...openedProducts, newProduct]);
+      const filteredUnopened = unopenedProducts.filter(
+        (unProduct: IProduct) => product !== unProduct
+        );
+        const filteredReplaceSoon = replaceSoonProducts.filter(
+          (unProduct: IProduct) => product !== unProduct
+          );
+          setReplaceSoonProducts(filteredReplaceSoon)
+          setUnopenedProducts(filteredUnopened);
+          setMonths('');
+    }else{
+      alert("The product needs to remain opened less than that amount of months because the expiry date is sooner!")
+    }
   };
 
 
