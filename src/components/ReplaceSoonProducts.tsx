@@ -3,18 +3,18 @@ import { useNavigate } from 'react-router-dom';
 import { Product } from './Product';
 
 interface ReplaceSoonProductsProps {
-  replaceSoonProducts: IProduct[];
   handleDelete: (product: IProduct) => void;
   submit: (product: IProduct) => void;
   setMonths: (value: React.SetStateAction<string>) => void;
   months: string;
+  replaceSoonProducts: IProduct[];
 }
 export function ReplaceSoonProducts({
   replaceSoonProducts,
+  months,
   handleDelete,
   submit,
   setMonths,
-  months,
 }: ReplaceSoonProductsProps): JSX.Element {
   let navigate = useNavigate();
 
@@ -26,12 +26,10 @@ export function ReplaceSoonProducts({
         {replaceSoonProducts.map((product: IProduct, i: number) => (
           <div key={i}>
             <Product
-              handleSubmit={() => submit(product)}
-              handleMonths={(e) => setMonths(e.target.value)}
-              months={months}
-              key={i}
               product={product}
               handleDelete={handleDelete}
+              handleSubmit={() => submit(product)}
+              handleMonths={(e) => setMonths(e.target.value)}
             />
           </div>
         ))}

@@ -7,7 +7,7 @@ import { HomePage } from './components/HomePage';
 import { OpenedProducts } from './components/OpenedProducts';
 import { ReplaceSoonProducts } from './components/ReplaceSoonProducts';
 import { useLocalStorage } from './utils/localStorage';
-import { timeLeftOpened } from './utils/timeLeftOpened';
+import { calculateTimeLeftOpenedProducts } from './utils/timeLeftOpened';
 
 export interface IProduct {
   openedDate: string;
@@ -21,8 +21,8 @@ function App() {
     'skincare_tracker_open_products',
     []
   );
-  const [unopenedProducts, setUnopenedProducts] = useLocalStorage(
-    'skincare_tracker_unopened_products',
+  const [closedProducts, setClosedProducts] = useLocalStorage(
+    'skincare_tracker_closed_products',
     []
   );
   const [replaceSoonProducts, setReplaceSoonProducts] = useLocalStorage(
@@ -39,14 +39,14 @@ function App() {
     const updatedOpen = openedProducts.filter(
       (product: IProduct) => product !== delProduct
     );
-    const updatedUnopen = unopenedProducts.filter(
+    const updatedUnopen = closedProducts.filter(
       (product: IProduct) => product !== delProduct
     );
     const updatedRplSoon = replaceSoonProducts.filter(
       (product: IProduct) => product !== delProduct
     );
     setOpenedProducts(updatedOpen);
-    setUnopenedProducts(updatedUnopen);
+    setClosedProducts(updatedUnopen);
     setReplaceSoonProducts(updatedRplSoon);
   };
 
@@ -56,48 +56,46 @@ function App() {
       openedDate: openedDate,
       name: product.name,
     };
-    // if the expiry date is sooner than the amount of months it can remain opened, give warning that it can't remain opened for as long
     const newExpiryDate = addMonths(
       new Date(product.openedDate),
       parseInt(months)
     );
     const expiryDateObj = new Date(product.expiryDate!);
     if (expiryDateObj >= newExpiryDate) {
+      const filteredClosedProducts = closedProducts.filter(
+        (unProduct: IProduct) => product !== unProduct
+      );
+      const filteredReplaceSoonProducts = replaceSoonProducts.filter(
+        (unProduct: IProduct) => product !== unProduct
+      );
+      setReplaceSoonProducts(filteredReplaceSoonProducts);
+      setClosedProducts(filteredClosedProducts);
       setOpenedDate(new Date().toISOString().substring(0, 10));
       setOpenedProducts([...openedProducts, newProduct]);
-      const filteredUnopened = unopenedProducts.filter(
-        (unProduct: IProduct) => product !== unProduct
-      );
-      const filteredReplaceSoon = replaceSoonProducts.filter(
-        (unProduct: IProduct) => product !== unProduct
-      );
-      setReplaceSoonProducts(filteredReplaceSoon);
-      setUnopenedProducts(filteredUnopened);
       setMonths('');
     } else {
+      alert(
+        'The product needs to remain opened less than that amount of months because the expiry date is sooner! The product will be opened but will keep the same expiry date'
+      );
       const months = differenceInMonths(
         new Date(product.expiryDate!),
         new Date()
       ).toString();
       const newProduct = {
-        months: timeLeftOpened(openedDate, months),
+        months: calculateTimeLeftOpenedProducts(openedDate, months),
         openedDate: openedDate,
         name: product.name,
       };
-
-      alert(
-        'The product needs to remain opened less than that amount of months because the expiry date is sooner! The product will be opened but will keep the same expiry date'
-      );
-      setOpenedDate(new Date().toISOString().substring(0, 10));
-      setOpenedProducts([...openedProducts, newProduct]);
-      const filteredUnopened = unopenedProducts.filter(
+      const filteredClosedProducts = closedProducts.filter(
         (unProduct: IProduct) => product !== unProduct
       );
       const filteredReplaceSoon = replaceSoonProducts.filter(
         (unProduct: IProduct) => product !== unProduct
       );
+      setOpenedDate(new Date().toISOString().substring(0, 10));
+      setOpenedProducts([...openedProducts, newProduct]);
       setReplaceSoonProducts(filteredReplaceSoon);
-      setUnopenedProducts(filteredUnopened);
+      setClosedProducts(filteredClosedProducts);
       setMonths('');
     }
   };
@@ -109,7 +107,7 @@ function App() {
           path="/"
           element={
             <HomePage
-              unopenedProducts={unopenedProducts}
+              closedProducts={closedProducts}
               months={months}
               openedDate={openedDate}
               openedProducts={openedProducts}
@@ -117,7 +115,7 @@ function App() {
               setOpenedDate={setOpenedDate}
               setOpenedProducts={setOpenedProducts}
               setReplaceSoonProducts={setReplaceSoonProducts}
-              setUnopenedProducts={setUnopenedProducts}
+              setClosedProducts={setClosedProducts}
             />
           }
         />
@@ -141,7 +139,7 @@ function App() {
               months={months}
               setMonths={setMonths}
               submit={submit}
-              unopenedProducts={unopenedProducts}
+              closedProducts={closedProducts}
             />
           }
         />
