@@ -6,7 +6,6 @@ interface ClosedProductsProps {
   handleDelete: (product: IProduct) => void;
   submit: (product: IProduct) => void;
   setMonths: (value: React.SetStateAction<string>) => void;
-  months: string;
   closedProducts: IProduct[];
 }
 
@@ -14,7 +13,6 @@ export function ClosedProducts({
   handleDelete,
   submit,
   setMonths,
-  months,
   closedProducts,
 }: ClosedProductsProps): JSX.Element {
   let navigate = useNavigate();

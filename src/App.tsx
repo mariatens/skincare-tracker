@@ -124,7 +124,6 @@ function App() {
           element={
             <OpenedProducts
               handleDelete={handleDelete}
-              months={months}
               openedProducts={openedProducts}
               setMonths={setMonths}
               submit={submit}
@@ -136,7 +135,6 @@ function App() {
           element={
             <ClosedProducts
               handleDelete={handleDelete}
-              months={months}
               setMonths={setMonths}
               submit={submit}
               closedProducts={closedProducts}
@@ -151,7 +149,6 @@ function App() {
               replaceSoonProducts={replaceSoonProducts}
               setMonths={setMonths}
               submit={submit}
-              months={months}
             />
           }
         />
