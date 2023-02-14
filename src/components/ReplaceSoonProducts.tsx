@@ -6,12 +6,10 @@ interface ReplaceSoonProductsProps {
   handleDelete: (product: IProduct) => void;
   submit: (product: IProduct) => void;
   setMonths: (value: React.SetStateAction<string>) => void;
-  months: string;
   replaceSoonProducts: IProduct[];
 }
 export function ReplaceSoonProducts({
   replaceSoonProducts,
-  months,
   handleDelete,
   submit,
   setMonths,
